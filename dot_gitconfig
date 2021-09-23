@@ -1,0 +1,32 @@
+[user]
+	name = Ryan Wood
+	email = ryan@moonclerk.com
+[color]
+  ui = auto
+[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  lg = log -p
+  who = shortlog -s --
+[core]
+	editor = nvim
+	excludesfile = ~/.gitignore
+[github]
+	user = ryanwood
+[push]
+  default = current
+[heroku]
+	account = ryanwood
+[format]
+	pretty = format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
+[diff]
+	tool = diffmerge
+[difftool "diffmerge"]
+	cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
+[merge]
+	tool = diffmerge
+[mergetool "diffmerge"]
+	cmd = "diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$(if test -f \"$BASE\"; then echo \"$BASE\"; else echo \"$LOCAL\"; fi)\" \"$REMOTE\""
