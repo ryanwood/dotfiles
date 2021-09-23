@@ -1,0 +1,9 @@
+{
+  "diagnostic.displayByAle": true,
+  "snippets.extends": {
+    "javascriptreact": ["javascript"],
+    "ruby": ["ruby", "rails"],
+    "typescript": ["javascript"]
+  },
+  "tailwindCSS.headwind.runOnSave": false
+}
