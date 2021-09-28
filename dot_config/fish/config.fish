@@ -15,3 +15,5 @@ set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH ~/.ripgreprc
 set -gx FZF_DEFAULT_COMMAND "rg --files"
 set -gx FZF_DEFAULT_OPTS "-m"
+
+set -gx nvm_default_version v12.22.6
