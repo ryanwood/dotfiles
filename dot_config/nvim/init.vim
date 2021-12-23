@@ -279,12 +279,12 @@ nnoremap <leader>fz :tabnew %<cr>
 
 " fugitive
 nnoremap <leader>ga :Git add %:p<CR><CR>
-nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gc :Gcommit -v -q<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gf :GV!<CR>
-nnoremap <leader>gl :Glog<CR>
+nnoremap <leader>gl :Gclog<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gt :Gcommit -v -q %:p<CR>
