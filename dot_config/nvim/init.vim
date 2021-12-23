@@ -311,7 +311,13 @@ nnoremap <leader>o :Obsess<CR>
 nmap <Leader>p :Prettier<CR>
 
 " Find in project
+" Fix for Mac opt key
+command! -bang -nargs=* Rg
+\ call fzf#vim#grep(
+\   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+\   {'options': fzf#vim#with_preview()["options"] + ['--bind', 'ctrl-a:select-all,ctrl-d:deselect-all']}, <bang>0)
 nnoremap <leader>rg :Rg<space>
+
 " search & replace current word
 map <Leader>rr :%S@<C-r><C-w>@
 
