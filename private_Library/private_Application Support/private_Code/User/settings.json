@@ -1,0 +1,167 @@
+{
+     /**
+    * Better Defaults
+    **/
+    "editor.copyWithSyntaxHighlighting": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.emptySelectionClipboard": false,
+    "workbench.editor.enablePreview": false,
+    "window.newWindowDimensions": "inherit",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "files.trimTrailingWhitespace": true,
+    "diffEditor.renderSideBySide": false,
+    // "editor.snippetSuggestions": "top",
+    // "editor.detectIndentation": false,
+    "window.nativeFullScreen": false,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+
+    /**
+    * Hide Everything
+    */
+    "workbench.activityBar.visible": false,
+    "workbench.sideBar.location": "right",
+    // "workbench.statusBar.visible": false,
+    // "workbench.editor.showTabs": false,
+    "editor.minimap.enabled": false,
+    // "editor.lineNumbers": "off",
+
+    /**
+    * Silence The Noise
+    */
+    "breadcrumbs.enabled": false,
+    // "scm.diffDecorations": "none",
+    "editor.hover.enabled": false,
+    // "editor.matchBrackets": "never",
+    "workbench.tips.enabled": false,
+    "editor.colorDecorators": false,
+    // "git.decorations.enabled": false,
+    // "workbench.startupEditor": "none",
+    "editor.lightbulb.enabled": false,
+    "editor.selectionHighlight": false,
+    "editor.overviewRulerBorder": false,
+    // "editor.renderLineHighlight": "none",
+    "editor.occurrencesHighlight": false,
+    "problems.decorations.enabled": false,
+    // "editor.renderControlCharacters": false,
+    // "editor.hideCursorInOverviewRuler": true,
+    // "editor.gotoLocation.multipleReferences": "goto",
+    // "editor.gotoLocation.multipleDefinitions": "goto",
+    // "editor.gotoLocation.multipleDeclarations": "goto",
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    // "editor.gotoLocation.multipleImplementations": "goto",
+    // "editor.gotoLocation.multipleTypeDefinitions": "goto",
+
+    /**
+    * Typography
+    **/
+    "workbench.colorTheme": "Material Theme",
+    "editor.fontFamily": "Fira Code",
+    "editor.fontSize": 12,
+    "editor.lineHeight": 0,
+    "editor.suggestFontSize": 14,
+    "editor.suggestLineHeight": 28,
+    // "terminal.integrated.fontSize": 15,
+    // "terminal.integrated.lineHeight": 1.5,
+
+    /**
+    * Find
+    **/
+    "search.useIgnoreFiles": false,
+    "search.exclude": {
+        "**/vendor": true,
+        "**/assets/builds": true,
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/package-lock.json": true,
+        "**/storage": true,
+    },
+
+    /**
+    * Vim
+    **/
+    "vim.leader": "<space>",
+    "vim.easymotion": true,
+    "vim.surround": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    // "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    // "vim.handleKeys": {
+    //     "<C-a>": false,
+    //     "<C-f>": false
+    // },
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "j"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<leader>", "d"],
+            "after": ["d", "d"]
+        },
+        {
+            "before": ["<C-n>"],
+            "commands": [":nohl"]
+        },
+        {
+            "before": ["<leader>", "w"],
+            "commands": ["workbench.action.files.save"]
+        },
+        {
+            "before": ["<leader>", "t"],
+            "commands": ["workbench.action.toggleSidebarVisibility"]
+        },
+        {
+            "before": ["<leader>", "f"],
+            "commands": ["revealInExplorer"],
+        },
+        {
+            "before": ["<leader>", "r", "f"],
+            "commands": ["fileutils.renameFile"]
+        }
+    ],
+
+    /**
+    * Ruby
+    **/
+    "ruby.useLanguageServer": true,
+    "ruby.lintDebounceTime": 1500,
+    "ruby.useBundler": true,
+    "ruby.lint": {
+        "standard": true
+    },
+    "ruby.format": "standard",
+
+    /**
+    * Emmet
+    **/
+    "emmet.showSuggestionsAsSnippets": false,
+    "emmet.includeLanguages": {
+        "html.erb": "html"
+    },
+
+    /**
+    * TailwindCSS
+    **/
+    "tailwindCSS.emmetCompletions": true,
+    "tailwindCSS.includeLanguages": {
+        "html.erb": "html"
+    },
+
+    /**
+    * Personal
+    **/
+    "editor.tabSize": 2,
+    "editor.tabCompletion": "on",
+    "telemetry.telemetryLevel": "off",
+    "files.associations": {
+        "*.html.erb": "erb"
+    },
+
+    // "editor.bracketPairColorization.enabled": true,
+    // "editor.guides.bracketPairs":"active",
+    // "explorer.confirmDelete": false,
+}
