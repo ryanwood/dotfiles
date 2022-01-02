@@ -103,6 +103,9 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 call plug#end()
 
 " Plug 'briandoll/change-inside-surroundings.vim'
@@ -271,6 +274,11 @@ nmap <leader>ew :e %%
 nmap <leader>es :sp %%
 nmap <leader>ev :vsp %%
 nmap <leader>et :tabe %%
+
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " format (align) the entire file
 nnoremap <leader>fef :normal! gg=G``<CR>
