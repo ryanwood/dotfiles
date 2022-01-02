@@ -1,5 +1,5 @@
 {
-     /**
+    /**
     * Better Defaults
     **/
     "editor.copyWithSyntaxHighlighting": false,
@@ -12,10 +12,9 @@
     "diffEditor.renderSideBySide": false,
     // "editor.snippetSuggestions": "top",
     // "editor.detectIndentation": false,
-    "window.nativeFullScreen": false,
+    // "window.nativeFullScreen": false,
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
-
     /**
     * Hide Everything
     */
@@ -25,11 +24,10 @@
     // "workbench.editor.showTabs": false,
     "editor.minimap.enabled": false,
     // "editor.lineNumbers": "off",
-
     /**
     * Silence The Noise
     */
-    "breadcrumbs.enabled": false,
+    // "breadcrumbs.enabled": false,
     // "scm.diffDecorations": "none",
     "editor.hover.enabled": false,
     // "editor.matchBrackets": "never",
@@ -42,7 +40,7 @@
     "editor.overviewRulerBorder": false,
     // "editor.renderLineHighlight": "none",
     "editor.occurrencesHighlight": false,
-    "problems.decorations.enabled": false,
+    // "problems.decorations.enabled": false,
     // "editor.renderControlCharacters": false,
     // "editor.hideCursorInOverviewRuler": true,
     // "editor.gotoLocation.multipleReferences": "goto",
@@ -51,19 +49,17 @@
     "workbench.editor.enablePreviewFromQuickOpen": false,
     // "editor.gotoLocation.multipleImplementations": "goto",
     // "editor.gotoLocation.multipleTypeDefinitions": "goto",
-
     /**
     * Typography
     **/
     "workbench.colorTheme": "Material Theme",
-    "editor.fontFamily": "Fira Code",
+    "editor.fontFamily": "Hack",
     "editor.fontSize": 12,
     "editor.lineHeight": 0,
     "editor.suggestFontSize": 14,
     "editor.suggestLineHeight": 28,
     // "terminal.integrated.fontSize": 15,
     // "terminal.integrated.lineHeight": 1.5,
-
     /**
     * Find
     **/
@@ -76,7 +72,6 @@
         "**/package-lock.json": true,
         "**/storage": true,
     },
-
     /**
     * Vim
     **/
@@ -93,37 +88,72 @@
     // },
     "vim.insertModeKeyBindings": [
         {
-            "before": ["j", "j"],
-            "after": ["<Esc>"]
+            "before": [
+                "j",
+                "j"
+            ],
+            "after": [
+                "<Esc>"
+            ]
         }
     ],
     "vim.normalModeKeyBindingsNonRecursive": [
         {
-            "before": ["<leader>", "d"],
-            "after": ["d", "d"]
+            "before": [
+                "<leader>",
+                "d"
+            ],
+            "after": [
+                "d",
+                "d"
+            ]
         },
         {
-            "before": ["<C-n>"],
-            "commands": [":nohl"]
+            "before": [
+                "<C-n>"
+            ],
+            "commands": [
+                ":nohl"
+            ]
         },
         {
-            "before": ["<leader>", "w"],
-            "commands": ["workbench.action.files.save"]
+            "before": [
+                "<leader>",
+                "w"
+            ],
+            "commands": [
+                "workbench.action.files.save"
+            ]
         },
         {
-            "before": ["<leader>", "t"],
-            "commands": ["workbench.action.toggleSidebarVisibility"]
+            "before": [
+                "<leader>",
+                "t"
+            ],
+            "commands": [
+                "workbench.action.toggleSidebarVisibility"
+            ]
         },
         {
-            "before": ["<leader>", "f"],
-            "commands": ["revealInExplorer"],
+            "before": [
+                "<leader>",
+                "f"
+            ],
+            "commands": [
+                "revealInExplorer"
+            ],
         },
         {
-            "before": ["<leader>", "r", "f"],
-            "commands": ["fileutils.renameFile"]
+            "before": [
+                "<leader>",
+                "r",
+                "f"
+            ],
+            "commands": [
+                "fileutils.renameFile"
+            ]
         }
     ],
-
     /**
     * Ruby
     **/
@@ -134,7 +164,6 @@
         "standard": true
     },
     "ruby.format": "standard",
-
     /**
     * Emmet
     **/
@@ -142,7 +171,6 @@
     "emmet.includeLanguages": {
         "html.erb": "html"
     },
-
     /**
     * TailwindCSS
     **/
@@ -150,7 +178,6 @@
     "tailwindCSS.includeLanguages": {
         "html.erb": "html"
     },
-
     /**
     * Personal
     **/
@@ -160,7 +187,11 @@
     "files.associations": {
         "*.html.erb": "erb"
     },
-
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "vscode-erb-beautify.keepBlankLines": 1,
+    "explorer.confirmDelete": false,
+    "workbench.iconTheme": "eq-material-theme-icons",
     // "editor.bracketPairColorization.enabled": true,
     // "editor.guides.bracketPairs":"active",
     // "explorer.confirmDelete": false,

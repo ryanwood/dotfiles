@@ -1,6 +1,5 @@
 // Place your key bindings in this file to override the defaults
 [
-
     /**
     * Panels
     **/
@@ -32,7 +31,6 @@
         "key": "cmd+t",
         "command": "workbench.action.terminal.toggleTerminal"
     },
-
     /**
     * Toggle Font Size
     **/
@@ -45,7 +43,7 @@
             "value": [
                 {
                     "editor.fontSize": 14,
-                    "editor.lineHeight": 32
+                    "editor.lineHeight": 28
                 },
                 {
                     "editor.fontSize": 12,
@@ -54,7 +52,6 @@
             ]
         }
     },
-
     /**
     * File Explorer
     **/
@@ -78,7 +75,6 @@
         "command": "workbench.files.action.refreshFilesExplorer",
         "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
     },
-
     /**
     * Fold/Unfold
     **/
@@ -92,7 +88,6 @@
     //     "command": "editor.unfold",
     //     "when": "editorFocus"
     // },
-
     /**
     * Line Manipulation
     **/
@@ -106,7 +101,6 @@
         "command": "editor.action.joinLines",
         "when": "editorTextFocus"
     },
-
     /**
     * Multi-Cursor
     **/
@@ -125,7 +119,6 @@
         "command": "editor.action.insertCursorAtEndOfEachLineSelected",
         "when": "editorFocus && editorHasSelection"
     },
-
     /**
     * Emmet
     **/
@@ -164,7 +157,6 @@
         "command": "editor.emmet.action.removeTag",
         "when": "editorTextFocus"
     },
-
     /**
     * Terminal Split Panel
     **/
@@ -188,7 +180,6 @@
         "command": "workbench.action.terminal.kill",
         "when": "terminalFocus"
     },
-
     /**
     * Vim Window/Panel Movement
     **/
