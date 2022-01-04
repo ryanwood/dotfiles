@@ -54,10 +54,10 @@
     **/
     "workbench.colorTheme": "Material Theme",
     "editor.fontFamily": "Hack",
-    "editor.fontSize": 12,
+    "editor.fontSize": 14,
     "editor.lineHeight": 0,
-    "editor.suggestFontSize": 14,
-    "editor.suggestLineHeight": 28,
+    // "editor.suggestFontSize": 14,
+    // "editor.suggestLineHeight": 28,
     // "terminal.integrated.fontSize": 15,
     // "terminal.integrated.lineHeight": 1.5,
     /**
@@ -167,6 +167,7 @@
     /**
     * Emmet
     **/
+    "emmet.triggerExpansionOnTab": true,
     "emmet.showSuggestionsAsSnippets": false,
     "emmet.includeLanguages": {
         "html.erb": "html"
@@ -185,7 +186,7 @@
     "editor.tabCompletion": "on",
     "telemetry.telemetryLevel": "off",
     "files.associations": {
-        "*.html.erb": "erb"
+        "html.erb": "erb"
     },
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
