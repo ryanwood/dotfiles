@@ -74,7 +74,7 @@
     "workbench.editor.enablePreview": true,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.iconTheme": "eq-material-theme-icons",
-    "workbench.sideBar.location": "right",
+    "workbench.sideBar.location": "left",
     "workbench.tips.enabled": false,
     // *
     // * Long VIM keybindings (at bottom)
