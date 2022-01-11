@@ -20,13 +20,9 @@
     "editor.tabCompletion": "on",
     "editor.tabSize": 2,
     "explorer.confirmDelete": false,
-    "files.associations": {
-        "*.html.erb": "erb"
-    },
     "emmet.triggerExpansionOnTab": true,
     "emmet.showSuggestionsAsSnippets": false,
     "emmet.includeLanguages": {
-        "erb": "html",
         "html.erb": "html"
     },
     "files.insertFinalNewline": true,
@@ -55,7 +51,7 @@
     },
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.includeLanguages": {
-        "erb": "html"
+        "html.erb": "html"
     },
     "telemetry.telemetryLevel": "off",
     "terminal.integrated.fontSize": 13,
