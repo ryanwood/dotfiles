@@ -1,70 +1,46 @@
 {
-    /**
-    * Better Defaults
-    **/
-    "editor.copyWithSyntaxHighlighting": false,
     "diffEditor.ignoreTrimWhitespace": false,
-    "editor.emptySelectionClipboard": false,
-    // "workbench.editor.enablePreview": false,
-    "workbench.editor.enablePreview": true,
-    "window.newWindowDimensions": "inherit",
-    "editor.multiCursorModifier": "ctrlCmd",
-    "files.trimTrailingWhitespace": true,
     "diffEditor.renderSideBySide": false,
-    // "editor.snippetSuggestions": "top",
-    // "editor.detectIndentation": false,
-    // "window.nativeFullScreen": false,
-    "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true,
-    /**
-    * Hide Everything
-    */
-    // "workbench.activityBar.visible": false,
-    "workbench.activityBar.visible": true,
-    "workbench.sideBar.location": "right",
-    // "workbench.statusBar.visible": false,
-    // "workbench.editor.showTabs": false,
-    "editor.minimap.enabled": false,
-    // "editor.lineNumbers": "off",
-    /**
-    * Silence The Noise
-    */
-    // "breadcrumbs.enabled": false,
-    // "scm.diffDecorations": "none",
-    "editor.hover.enabled": false,
-    // "editor.matchBrackets": "never",
-    "workbench.tips.enabled": false,
+    "editor.bracketPairColorization.enabled": true,
     "editor.colorDecorators": false,
-    // "git.decorations.enabled": false,
-    // "workbench.startupEditor": "none",
-    "editor.lightbulb.enabled": false,
-    "editor.selectionHighlight": false,
-    "editor.overviewRulerBorder": false,
-    // "editor.renderLineHighlight": "none",
-    "editor.occurrencesHighlight": false,
-    // "problems.decorations.enabled": false,
-    // "editor.renderControlCharacters": false,
-    // "editor.hideCursorInOverviewRuler": true,
-    // "editor.gotoLocation.multipleReferences": "goto",
-    // "editor.gotoLocation.multipleDefinitions": "goto",
-    // "editor.gotoLocation.multipleDeclarations": "goto",
-    "workbench.editor.enablePreviewFromQuickOpen": false,
-    // "editor.gotoLocation.multipleImplementations": "goto",
-    // "editor.gotoLocation.multipleTypeDefinitions": "goto",
-    /**
-    * Typography
-    **/
-    "workbench.colorTheme": "Material Theme",
+    "editor.copyWithSyntaxHighlighting": false,
+    "editor.emptySelectionClipboard": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
     "editor.fontFamily": "Hack",
     "editor.fontSize": 13,
+    "editor.hover.enabled": false,
+    "editor.lightbulb.enabled": false,
     "editor.lineHeight": 0,
-    // "editor.suggestFontSize": 14,
-    // "editor.suggestLineHeight": 28,
-    "terminal.integrated.fontSize": 13,
-    "terminal.integrated.lineHeight": 0,
-    /**
-    * Find
-    **/
+    "editor.minimap.enabled": false,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.occurrencesHighlight": false,
+    "editor.overviewRulerBorder": false,
+    "editor.selectionHighlight": false,
+    "editor.tabCompletion": "on",
+    "editor.tabSize": 2,
+    "explorer.confirmDelete": false,
+    "files.associations": {
+        "*.html.erb": "erb"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "emmet.showSuggestionsAsSnippets": false,
+    "emmet.includeLanguages": {
+        "erb": "html",
+        "html.erb": "html"
+    },
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "git.autofetch": true,
+    "ruby.useLanguageServer": true,
+    "ruby.lintDebounceTime": 1500,
+    "ruby.useBundler": true,
+    "ruby.lint": {
+        "standard": true
+    },
+    "ruby.format": "standard",
+    "ruby.specSaveFile": true,
     "search.useIgnoreFiles": false,
     "search.exclude": {
         "**/vendor": true,
@@ -77,20 +53,32 @@
         "**/tmp/": true,
         "spec/examples": true
     },
-    /**
-    * Vim
-    **/
+    "tailwindCSS.emmetCompletions": true,
+    "tailwindCSS.includeLanguages": {
+        "erb": "html"
+    },
+    "telemetry.telemetryLevel": "off",
+    "terminal.integrated.fontSize": 13,
+    "terminal.integrated.lineHeight": 0,
     "vim.leader": "<space>",
     "vim.easymotion": true,
     "vim.surround": true,
     "vim.incsearch": true,
     "vim.useSystemClipboard": true,
-    // "vim.useCtrlKeys": true,
     "vim.hlsearch": true,
-    // "vim.handleKeys": {
-    //     "<C-a>": false,
-    //     "<C-f>": false
-    // },
+    "vscode-erb-beautify.keepBlankLines": 1,
+    "window.newWindowDimensions": "inherit",
+    "window.zoomLevel": 0.5,
+    "workbench.activityBar.visible": true,
+    "workbench.colorTheme": "Material Theme",
+    "workbench.editor.enablePreview": true,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.iconTheme": "eq-material-theme-icons",
+    "workbench.sideBar.location": "right",
+    "workbench.tips.enabled": false,
+    // *
+    // * Long VIM keybindings (at bottom)
+    // *
     "vim.insertModeKeyBindings": [
         {
             "before": [
@@ -168,50 +156,28 @@
             ]
         }
     ],
-    /**
-    * Ruby
-    **/
-    "ruby.useLanguageServer": true,
-    "ruby.lintDebounceTime": 1500,
-    "ruby.useBundler": true,
-    "ruby.lint": {
-        "standard": true
-    },
-    "ruby.format": "standard",
-    /**
-    * Emmet
-    **/
-    "emmet.triggerExpansionOnTab": true,
-    "emmet.showSuggestionsAsSnippets": false,
-    "emmet.includeLanguages": {
-        "erb": "html",
-        "html.erb": "html"
-    },
-    /**
-    * TailwindCSS
-    **/
-    "tailwindCSS.emmetCompletions": true,
-    "tailwindCSS.includeLanguages": {
-        "erb": "html"
-    },
-    /**
-    * Personal
-    **/
-    "editor.tabSize": 2,
-    "editor.tabCompletion": "on",
-    "telemetry.telemetryLevel": "off",
-    "files.associations": {
-        "*.html.erb": "erb"
-    },
-    "editor.formatOnSave": true,
-    "editor.formatOnPaste": true,
-    "editor.bracketPairColorization.enabled": true,
-    "vscode-erb-beautify.keepBlankLines": 1,
-    "explorer.confirmDelete": false,
-    "workbench.iconTheme": "eq-material-theme-icons",
-    "ruby.specSaveFile": true,
-    "git.autofetch": true,
-    "window.zoomLevel": 0.5
-    // "editor.guides.bracketPairs":"active",
-    // "explorer.confirmDelete": false,
+    // Unused/Altered settings from "Make VSCode Awesome"
+    //
+    // "breadcrumbs.enabled": false,
+    // "editor.detectIndentation": false,
+    // "editor.gotoLocation.multipleDeclarations": "goto",
+    // "editor.gotoLocation.multipleDefinitions": "goto",
+    // "editor.gotoLocation.multipleImplementations": "goto",
+    // "editor.gotoLocation.multipleReferences": "goto",
+    // "editor.gotoLocation.multipleTypeDefinitions": "goto",
+    // "editor.hideCursorInOverviewRuler": true,
+    // "editor.matchBrackets": "never",
+    // "editor.renderControlCharacters": false,
+    // "editor.renderLineHighlight": "none",
+    // "editor.snippetSuggestions": "top",
+    // "editor.suggestFontSize": 14,
+    // "editor.suggestLineHeight": 28,
+    // "git.decorations.enabled": false,
+    // "problems.decorations.enabled": false,
+    // "window.nativeFullScreen": false,
+    // "workbench.activityBar.visible": false,
+    // "workbench.startupEditor": "none",
+    //
+    // * This is stuff that's added via the Settings UI...
+    // *
 }
