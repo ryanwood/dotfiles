@@ -23,31 +23,33 @@
         "key": "cmd+k cmd+b",
         "command": "workbench.action.toggleSidebarVisibility"
     },
-    {
-        "key": "cmd+e",
-        "command": "workbench.action.focusActiveEditorGroup"
-    },
-    {
-        "key": "cmd+t",
-        "command": "workbench.action.terminal.toggleTerminal"
-    },
+    // {
+    //     "key": "cmd+e",
+    //     "command": "workbench.action.focusActiveEditorGroup"
+    // },
+    // {
+    //     "key": "cmd+t",
+    //     "command": "workbench.action.terminal.toggleTerminal"
+    // },
     /**
     * Toggle Font Size
     **/
     {
         "key": "cmd+k cmd+k",
         "command": "toggle",
-        "when": "editorTextFocus",
+        "when": "editorTextFocus || terminalFocus",
         "args": {
             "id": "fontSize",
             "value": [
                 {
-                    "editor.fontSize": 14,
-                    "editor.lineHeight": 28
+                    "editor.fontSize": 13,
+                    // "editor.lineHeight": 0
+                    "terminal.integrated.fontSize": 13,
                 },
                 {
-                    "editor.fontSize": 12,
-                    "editor.lineHeight": 0
+                    "editor.fontSize": 10,
+                    // "editor.lineHeight": 0
+                    "terminal.integrated.fontSize": 10,
                 }
             ]
         }
@@ -96,11 +98,11 @@
         "command": "editor.action.copyLinesDownAction",
         "when": "editorTextFocus"
     },
-    {
-        "key": "cmd+j",
-        "command": "editor.action.joinLines",
-        "when": "editorTextFocus"
-    },
+    // {
+    //     "key": "cmd+j",
+    //     "command": "editor.action.joinLines",
+    //     "when": "editorTextFocus"
+    // },
     /**
     * Multi-Cursor
     **/

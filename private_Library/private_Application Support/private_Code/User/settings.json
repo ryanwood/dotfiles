@@ -5,7 +5,8 @@
     "editor.copyWithSyntaxHighlighting": false,
     "diffEditor.ignoreTrimWhitespace": false,
     "editor.emptySelectionClipboard": false,
-    "workbench.editor.enablePreview": false,
+    // "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreview": true,
     "window.newWindowDimensions": "inherit",
     "editor.multiCursorModifier": "ctrlCmd",
     "files.trimTrailingWhitespace": true,
@@ -18,7 +19,8 @@
     /**
     * Hide Everything
     */
-    "workbench.activityBar.visible": false,
+    // "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     "workbench.sideBar.location": "right",
     // "workbench.statusBar.visible": false,
     // "workbench.editor.showTabs": false,
@@ -54,12 +56,12 @@
     **/
     "workbench.colorTheme": "Material Theme",
     "editor.fontFamily": "Hack",
-    "editor.fontSize": 14,
+    "editor.fontSize": 13,
     "editor.lineHeight": 0,
     // "editor.suggestFontSize": 14,
     // "editor.suggestLineHeight": 28,
-    // "terminal.integrated.fontSize": 15,
-    // "terminal.integrated.lineHeight": 1.5,
+    "terminal.integrated.fontSize": 13,
+    "terminal.integrated.lineHeight": 0,
     /**
     * Find
     **/
@@ -71,6 +73,9 @@
         "**/dist": true,
         "**/package-lock.json": true,
         "**/storage": true,
+        "**/log/": true,
+        "**/tmp/": true,
+        "spec/examples": true
     },
     /**
     * Vim
@@ -98,6 +103,15 @@
         }
     ],
     "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "=",
+                "="
+            ],
+            "commands": [
+                "editor.action.formatDocument"
+            ]
+        },
         {
             "before": [
                 "<leader>",
@@ -170,6 +184,7 @@
     "emmet.triggerExpansionOnTab": true,
     "emmet.showSuggestionsAsSnippets": false,
     "emmet.includeLanguages": {
+        "erb": "html",
         "html.erb": "html"
     },
     /**
@@ -177,7 +192,7 @@
     **/
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.includeLanguages": {
-        "html.erb": "html"
+        "erb": "html"
     },
     /**
     * Personal
@@ -186,14 +201,17 @@
     "editor.tabCompletion": "on",
     "telemetry.telemetryLevel": "off",
     "files.associations": {
-        "html.erb": "erb"
+        "*.html.erb": "erb"
     },
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
+    "editor.bracketPairColorization.enabled": true,
     "vscode-erb-beautify.keepBlankLines": 1,
     "explorer.confirmDelete": false,
     "workbench.iconTheme": "eq-material-theme-icons",
-    // "editor.bracketPairColorization.enabled": true,
+    "ruby.specSaveFile": true,
+    "git.autofetch": true,
+    "window.zoomLevel": 0.5
     // "editor.guides.bracketPairs":"active",
     // "explorer.confirmDelete": false,
 }
