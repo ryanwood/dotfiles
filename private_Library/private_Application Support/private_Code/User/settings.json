@@ -23,7 +23,10 @@
     "emmet.triggerExpansionOnTab": true,
     "emmet.showSuggestionsAsSnippets": false,
     "emmet.includeLanguages": {
-        "html.erb": "html"
+        "erb": "html"
+    },
+    "files.associations": {
+        "*.erb": "erb"
     },
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
@@ -51,7 +54,7 @@
     },
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.includeLanguages": {
-        "html.erb": "html"
+        "erb": "html",
     },
     "telemetry.telemetryLevel": "off",
     "terminal.integrated.fontSize": 13,
