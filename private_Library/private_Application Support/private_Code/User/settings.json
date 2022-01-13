@@ -9,8 +9,8 @@
     "editor.formatOnPaste": true,
     "editor.fontFamily": "Hack",
     "editor.fontSize": 13,
-    "editor.hover.enabled": false,
-    "editor.lightbulb.enabled": false,
+    "editor.hover.enabled": true,
+    "editor.lightbulb.enabled": true,
     "editor.lineHeight": 0,
     "editor.minimap.enabled": false,
     "editor.multiCursorModifier": "ctrlCmd",
@@ -32,6 +32,8 @@
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
     "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
     "ruby.useLanguageServer": true,
     "ruby.lintDebounceTime": 1500,
     "ruby.useBundler": true,
@@ -53,6 +55,9 @@
         "spec/examples": true
     },
     "tailwindCSS.emmetCompletions": true,
+    "tailwindCSS.experimental.classRegex": [
+        "class:\\s*\"([^\"]*)\""
+    ],
     "tailwindCSS.includeLanguages": {
         "erb": "html",
     },
