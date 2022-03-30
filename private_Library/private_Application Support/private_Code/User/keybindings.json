@@ -3,26 +3,6 @@
     /**
     * Panels
     **/
-    {
-        "key": "cmd+k cmd+e",
-        "command": "workbench.view.explorer"
-    },
-    {
-        "key": "cmd+k cmd+g",
-        "command": "workbench.view.scm"
-    },
-    {
-        "key": "cmd+k cmd+d",
-        "command": "workbench.view.debug"
-    },
-    {
-        "key": "cmd+k cmd+x",
-        "command": "workbench.extensions.action.showInstalledExtensions"
-    },
-    {
-        "key": "cmd+k cmd+b",
-        "command": "workbench.action.toggleSidebarVisibility"
-    },
     // {
     //     "key": "cmd+e",
     //     "command": "workbench.action.focusActiveEditorGroup"
@@ -47,9 +27,9 @@
                     "terminal.integrated.fontSize": 13,
                 },
                 {
-                    "editor.fontSize": 10,
+                    "editor.fontSize": 11,
                     // "editor.lineHeight": 0
-                    "terminal.integrated.fontSize": 10,
+                    "terminal.integrated.fontSize": 11,
                 }
             ]
         }
@@ -150,11 +130,6 @@
         "when": "editorTextFocus"
     },
     {
-        "key": "cmd+m cmd+r",
-        "command": "editor.emmet.action.updateTag",
-        "when": "editorTextFocus"
-    },
-    {
         "key": "cmd+m cmd+backspace",
         "command": "editor.emmet.action.removeTag",
         "when": "editorTextFocus"
@@ -183,6 +158,19 @@
         "when": "terminalFocus"
     },
     /**
+    * Toggle between editor and terminal
+    **/
+    {
+        "key": "alt+t",
+        "command": "workbench.action.terminal.focus",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "alt+t",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus"
+    },
+    /**
     * Vim Window/Panel Movement
     **/
     {
@@ -201,8 +189,21 @@
         "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
     },
     {
+        "key": "ctrl+k",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus"
+    },
+    {
         "key": "ctrl+j",
         "command": "workbench.action.focusBelowGroup",
         "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
+    },
+    {
+        "key": "shift+alt+cmd+p",
+        "command": "projectManager.listProjectsNewWindow"
+    },
+    {
+        "key": "ctrl+cmd+'",
+        "command": "alternate.alternateFile"
     }
 ]
