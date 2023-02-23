@@ -4,7 +4,7 @@ abbr bx      'bundle exec'
 abbr d       'git diff'
 abbr devlog  'tail -f log/development.log'
 abbr ds      'NO_CONFIRM=1 ./deploy staging'
-abbr dp      './deploy --preboot production'
+abbr dp      './deploy production'
 
 abbr hlp     'heroku logs -r production'
 abbr hls     'heroku logs -r staging'

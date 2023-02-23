@@ -132,12 +132,12 @@
    * Toggle between editor and terminal
    **/
   {
-    "key": "alt+t",
+    "key": "ctrl+'",
     "command": "workbench.action.terminal.focus",
     "when": "!terminalFocus"
   },
   {
-    "key": "alt+t",
+    "key": "ctrl+'",
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "terminalFocus"
   },
@@ -162,7 +162,7 @@
   {
     "key": "ctrl+k",
     "command": "workbench.action.focusActiveEditorGroup",
-    "when": "terminalFocus"
+    "when": "terminalFocus && vim.active"
   },
   {
     "key": "ctrl+j",
@@ -176,5 +176,10 @@
   {
     "key": "ctrl+cmd+'",
     "command": "alternate.alternateFile"
+  },
+  {
+    "key": "cmd+shift+.",
+    "command": "erb.toggleTags",
+    "when": "editorTextFocus && editorLangId == erb"
   }
 ]

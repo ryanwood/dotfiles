@@ -8,7 +8,8 @@ call plug#begin()
 " Plug 'joshdick/onedark.vim'
 " Plug 'sonph/onehalf', { 'rtp': 'vim' }
 " Plug 'wojciechkepka/vim-github-dark'
-Plug 'adrian5/oceanic-next-vim'
+" Plug 'adrian5/oceanic-next-vim'
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 
 " Project
 Plug 'christoomey/vim-tmux-navigator'
@@ -197,10 +198,12 @@ endif
 " colorscheme onehalfdark
 " colorscheme ghdark
 
-colorscheme oceanicnext
-let g:oceanic_for_polyglot = 1
+" colorscheme oceanicnext
+" let g:oceanic_for_polyglot = 1
 
-" set guifont=Hack:h14
+colorscheme material
+
+set guifont=Hack:h14
 
 " To enable mode shapes, "Cursor" highlight, and blinking:
 " https://neovim.io/doc/user/options.html#'guicursor'
@@ -211,9 +214,9 @@ highlight Cursor gui=reverse guifg=NONE guibg=NONE
 highlight Cursor gui=NONE guifg=bg guibg=fg
 
 " Show a vertical line/guard at column 80
-let &colorcolumn=join(range(81,999),",")
-highlight ColorColumn ctermbg=236  guibg=#2C323C
-let &colorcolumn="80,".join(range(100,999),",")
+" let &colorcolumn=join(range(81,999),",")
+" highlight ColorColumn ctermbg=236  guibg=#2C323C
+" let &colorcolumn="80,".join(range(100,999),",")
 
 
 " ======================================================== }}}
@@ -758,7 +761,7 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
   " \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype']]
 
 let g:lightline = {
-  \ 'colorscheme': 'oceanicnext',
+  \ 'colorscheme': 'material_vim',
   \ 'active': {
   \   'left': [['mode', 'paste'], ['cocstatus', 'currentfunction', 'gitbranch', 'readonly', 'filenamewithparent', 'modified']],
   \   'right': [['lineinfo'], ['percent'], ['filetype']]
