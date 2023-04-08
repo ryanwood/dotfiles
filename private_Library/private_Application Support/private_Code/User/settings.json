@@ -9,6 +9,7 @@
     "erb": "html",
     "html.erb": "html"
   },
+  "explorer.confirmDragAndDrop": false,
   "files.associations": {
     "*.erb": "erb",
     "*.jb": "ruby"
@@ -40,12 +41,16 @@
   "terminal.integrated.fontSize": 13,
   "vscode-erb-beautify.keepBlankLines": 1,
   "window.newWindowDimensions": "offset",
-  "workbench.sideBar.location": "right",
+  "workbench.activityBar.visible": false,
   "workbench.colorTheme": "City Lights",
+  "workbench.iconTheme": "city-lights-icons-vsc",
+  "workbench.sideBar.location": "right",
   "[ruby]": {
     "editor.defaultFormatter": "testdouble.vscode-standard-ruby",
     "editor.formatOnType": true,
     "editor.insertSpaces": true,
   },
-  "workbench.iconTheme": "city-lights-icons-vsc-light",
+  "[javascript]": {
+    "editor.defaultFormatter": "standard.vscode-standard",
+  },
 }
