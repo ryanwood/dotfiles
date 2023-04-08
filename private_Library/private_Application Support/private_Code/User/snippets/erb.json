@@ -30,9 +30,83 @@
 		"prefix": "co",
 		"body": [
 			"<!--<% if false %>",
-			"  $1",
+			"\t$1",
 			"<% end %>-->"
 		],
 		"description": "Adds an ERB comment"
-	}
+	},
+	"if": {
+		"prefix": "if",
+		"body": [
+			"<% if $1 %>",
+			"\t$2",
+			"<% end %>"
+		],
+		"description": "if"
+	},
+	"ife": {
+		"prefix": "ife",
+		"body": [
+			"<% if $1 %>",
+			"\t$2",
+			"<% else %>",
+			"\t$3",
+			"<% end %>"
+		],
+		"description": "if-else"
+	},
+	"else": {
+		"prefix": "else",
+		"body": [
+			"<% else %>",
+		],
+		"description": "else"
+	},
+	"end": {
+		"prefix": "end",
+		"body": [
+			"<% end %>",
+		],
+		"description": "end"
+	},
+	"each": {
+		"prefix": "each",
+		"body": [
+			"<% ${1:variable}.each do |${2:loop_variable}| %>",
+			"\t$3",
+			"<% end %>"
+		],
+		"description": "rails each"
+	},
+	"map": {
+		"prefix": "map",
+		"body": [
+			"<% ${1:variable}.map do |${2:loop_variable}| %>",
+			"\t$3",
+			"<% end %>"
+		],
+		"description": "rails map"
+	},
+	"link_to": {
+		"prefix": [
+			"lt",
+			"link_to"
+		],
+		"body": [
+			"<%= link_to \"${1:text}\", ${2:path} %>"
+		],
+		"description": "rails link_to"
+	},
+	"link_to block": {
+		"prefix": [
+			"ltb",
+			"link_tob"
+		],
+		"body": [
+			"<%= link_to ${1:path} %>",
+			"\t${2:content}",
+			"<% end %>"
+		],
+		"description": "rails link_to block"
+	},
 }
