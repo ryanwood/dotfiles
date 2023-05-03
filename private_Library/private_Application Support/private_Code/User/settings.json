@@ -9,6 +9,8 @@
     "erb": "html",
     "html.erb": "html"
   },
+  // "explorer.autoReveal": "focusNoScroll",
+  "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "files.associations": {
     "*.erb": "erb",
@@ -43,7 +45,6 @@
   "window.newWindowDimensions": "offset",
   "workbench.activityBar.visible": false,
   "workbench.colorTheme": "City Lights",
-  "workbench.iconTheme": "city-lights-icons-vsc",
   "workbench.sideBar.location": "right",
   "[ruby]": {
     "editor.defaultFormatter": "testdouble.vscode-standard-ruby",

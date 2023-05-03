@@ -114,7 +114,7 @@
 		"prefix": "rspec",
 		"body": [
 			"require \"rails_helper\"\n",
-			"RSpec.describe ${1:User}, type: ${2:|model,system,request|} do",
+			"RSpec.describe ${1:a thing}, type: :${2|model,system,request|} do",
 			"\t$0",
 			"end"
 		],
@@ -133,7 +133,11 @@
 			"des",
 			"describe"
 		],
-		"body": "describe \"${1:}\" do\n  ${2:}$0\nend\n",
+		"body": [
+			"describe \"${1}\" do",
+			"\t$0",
+			"end"
+		],
 		"description": "RSpec describe case"
 	},
 	"rspec_context": {
@@ -203,5 +207,25 @@
 		],
 		"body": "before { $0 }",
 		"description": "RSpec before"
+	},
+	"factorybot_build": {
+		"prefix": "build",
+		"body": "build(:${1:factory}, $2)$0",
+		"description": "FactoryBot build"
+	},
+	"factorybot_create": {
+		"prefix": "create",
+		"body": "create(:${1:factory}, $2)$0",
+		"description": "FactoryBot create"
+	},
+	"factorybot_factory": {
+		"prefix": "fac",
+		"body": "${1|build,create|}(:${2:factory}, $3)$0",
+		"description": "FactoryBot factory"
+	},
+	"capybara_save_and_open_page": {
+		"prefix": "so",
+		"body": "save_and_open_page",
+		"description": "Capybara Save and Open Page"
 	},
 }

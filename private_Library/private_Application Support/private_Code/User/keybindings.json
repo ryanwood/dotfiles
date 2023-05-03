@@ -1,185 +1,41 @@
 // Place your key bindings in this file to override the defaults
 [
-  /**
-   * Toggle Font Size
-   **/
-  {
-    "key": "cmd+k cmd+k",
-    "command": "toggle",
-    "when": "editorTextFocus || terminalFocus",
-    "args": {
-      "id": "fontSize",
-      "value": [
-        {
-          "editor.fontSize": 13,
-          // "editor.lineHeight": 0
-          "terminal.integrated.fontSize": 13
-        },
-        {
-          "editor.fontSize": 11,
-          // "editor.lineHeight": 0
-          "terminal.integrated.fontSize": 11
-        }
-      ]
-    }
-  },
-  /**
-   * File Explorer
-   **/
-  {
-    "key": "cmd+d",
-    "command": "duplicate.execute",
-    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
-  },
-  {
-    "key": "cmd+n",
-    "command": "explorer.newFile",
-    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
-  },
-  {
-    "key": "shift+cmd+n",
-    "command": "explorer.newFolder",
-    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
-  },
-  {
-    "key": "cmd+r",
-    "command": "workbench.files.action.refreshFilesExplorer",
-    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
-  },
-  /**
-   * Line Manipulation
-   **/
-  {
-    "key": "cmd+l",
-    "command": "editor.action.copyLinesDownAction",
-    "when": "editorTextFocus"
-  },
-  /**
-   * Multi-Cursor
-   **/
-  {
-    "key": "cmd+backspace",
-    "command": "editor.action.moveSelectionToPreviousFindMatch",
-    "when": "editorFocus && editorHasMultipleSelections"
-  },
-  {
-    "key": "cmd+k cmd+d",
-    "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "editorFocus && editorHasMultipleSelections"
-  },
-  {
-    "key": "cmd+right",
-    "command": "editor.action.insertCursorAtEndOfEachLineSelected",
-    "when": "editorFocus && editorHasSelection"
-  },
-  /**
-   * Emmet
-   **/
-  {
-    "key": "cmd+m cmd+i",
-    "command": "editor.emmet.action.balanceIn",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+o",
-    "command": "editor.emmet.action.balanceOut",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+w",
-    "command": "editor.emmet.action.wrapWithAbbreviation",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+m",
-    "command": "editor.emmet.action.matchTag",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+e",
-    "command": "editor.action.smartSelect.expand",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+m cmd+backspace",
-    "command": "editor.emmet.action.removeTag",
-    "when": "editorTextFocus"
-  },
-  /**
-   * Terminal Split Panel
-   **/
-  {
-    "key": "ctrl+n",
-    "command": "workbench.action.terminal.split",
-    "when": "terminalFocus"
-  },
-  {
-    "key": "ctrl+l",
-    "command": "workbench.action.terminal.focusNextPane",
-    "when": "terminalFocus"
-  },
-  {
-    "key": "ctrl+h",
-    "command": "workbench.action.terminal.focusPreviousPane",
-    "when": "terminalFocus"
-  },
-  {
-    "key": "ctrl+w",
-    "command": "workbench.action.terminal.kill",
-    "when": "terminalFocus"
-  },
-  /**
-   * Toggle between editor and terminal
-   **/
-  {
-    "key": "ctrl+'",
-    "command": "workbench.action.terminal.focus",
-    "when": "!terminalFocus"
-  },
-  {
-    "key": "ctrl+'",
-    "command": "workbench.action.focusActiveEditorGroup",
-    "when": "terminalFocus"
-  },
-  /**
-   * Vim Window/Panel Movement
-   **/
+  // Vim pane movement
   {
     "key": "ctrl+h",
     "command": "workbench.action.focusLeftGroup",
-    "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
+    "when": "editorTextFocus && !extension.simpleVim.insertMode"
   },
   {
     "key": "ctrl+l",
     "command": "workbench.action.focusRightGroup",
-    "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
+    "when": "editorTextFocus && !extension.simpleVim.insertMode"
   },
   {
     "key": "ctrl+k",
     "command": "workbench.action.focusAboveGroup",
-    "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
-  },
-  {
-    "key": "ctrl+k",
-    "command": "workbench.action.focusActiveEditorGroup",
-    "when": "terminalFocus && vim.active"
+    "when": "editorTextFocus && !extension.simpleVim.insertMode"
   },
   {
     "key": "ctrl+j",
     "command": "workbench.action.focusBelowGroup",
-    "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
+    "when": "editorTextFocus && !extension.simpleVim.insertMode"
+  },
+  // Move to terminal and back
+  {
+    "key": "ctrl+cmd+k",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "terminalFocus"
   },
   {
-    "key": "shift+alt+cmd+p",
-    "command": "projectManager.listProjectsNewWindow"
+    "key": "ctrl+cmd+j",
+    "command": "workbench.action.terminal.focus",
+    "when": "editorTextFocus && !extension.simpleVim.insertMode"
   },
+  // Other Prefs
   {
-    "key": "ctrl+cmd+'",
-    "command": "alternate.alternateFile"
+    "key": "shift+j",
+    "command": "editor.action.joinLines",
+    "when": "editorTextFocus && !extension.simpleVim.insertMode"
   },
-  {
-    "key": "cmd+shift+.",
-    "command": "erb.toggleTags",
-    "when": "editorTextFocus && editorLangId == erb"
-  }
 ]
