@@ -1,9 +1,15 @@
 {
+  "amVim.smartRelativeLineNumbers": true,
+  "amVim.useSystemClipboard": true,
   // "editor.fontFamily": "Bitstream Vera Sans Mono",
   "editor.fontFamily": "JetBrains Mono",
   "editor.fontSize": 13,
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
+  "editor.rulers": [
+    80,
+    120
+  ],
   "editor.tabSize": 2,
   "emmet.includeLanguages": {
     "erb": "html",
