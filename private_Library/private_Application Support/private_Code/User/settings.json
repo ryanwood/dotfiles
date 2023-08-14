@@ -3,7 +3,7 @@
   "amVim.useSystemClipboard": true,
   // "editor.fontFamily": "Bitstream Vera Sans Mono",
   "editor.fontFamily": "JetBrains Mono",
-  "editor.fontSize": 13,
+  "editor.fontSize": 14,
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "editor.rulers": [
@@ -20,7 +20,8 @@
   "explorer.confirmDragAndDrop": false,
   "files.associations": {
     "*.erb": "erb",
-    "*.jb": "ruby"
+    "*.jb": "ruby",
+    "*.thor": "ruby"
   },
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
@@ -29,7 +30,7 @@
   "rubyLsp.formatter": "syntax_tree",
   "rubyLsp.rubyVersionManager": "asdf",
   "rubyLsp.enabledFeatures": {
-    "codeActions": false,
+    "codeActions": true,
     "diagnostics": false,
     "documentHighlights": true,
     "documentLink": true,
@@ -45,6 +46,7 @@
   },
   "standard.autoFixOnSave": true,
   "standard.enable": true,
+  "standardRuby.autofix": true,
   "tailwindCSS.emmetCompletions": true,
   "terminal.integrated.fontSize": 13,
   "vscode-erb-beautify.keepBlankLines": 1,
@@ -54,10 +56,10 @@
   "workbench.sideBar.location": "right",
   "[ruby]": {
     "editor.defaultFormatter": "testdouble.vscode-standard-ruby",
-    "editor.formatOnType": true,
-    "editor.insertSpaces": true,
   },
   "[javascript]": {
     "editor.defaultFormatter": "standard.vscode-standard",
   },
+  "security.workspace.trust.untrustedFiles": "open",
+  "git.enableSmartCommit": true,
 }

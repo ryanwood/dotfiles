@@ -13,6 +13,8 @@ abbr hlts    'heroku logs -t -r staging'
 abbr hrcp    'heroku run console -r production'
 abbr hrcs    'heroku run console -r staging'
 
+abbr lg      'lazygit'
+
 abbr prodlog 'tail -f log/production.log'
 abbr pt      'papertrail'
 
@@ -43,23 +45,8 @@ abbr t       'rspec'
 abbr testlog 'tail -f log/test.log'
 abbr tff     'rspec --fail-fast'
 abbr tfo     'rspec --only-failures'
-abbr trc     'rubocop'
 abbr tsl     'slim-lint app/**/*.slim'
 abbr twos    'rspec --exclude-pattern spec/system/**/*_spec.rb'
-abbr twoj    'rspec --tags ~js spec/'
-
-abbr ta      'tmux attach -t'
-abbr tad     'tmux attach -d -t'
-abbr ts      'tmux new-session -s'
-abbr tl	     'tmux list-sessions'
-abbr tksv    'tmux kill-server'
-abbr tkss    'tmux kill-session -t'
-
-abbr n       'nvim'
-abbr v       'nvim'
-abbr vi      'nvim'
-abbr vim     'nvim'
-abbr vimdiff 'nvim -d'
 
 abbr y       'yarn'
 abbr ys      'yarn spec'
