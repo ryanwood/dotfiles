@@ -6,6 +6,13 @@ end
 
 fish_add_path ~/.bin /opt/homebrew/bin /Applications/Postgres.app/Contents/Versions/latest/bin
 
+# Hydro prompt settings
+set hydro_color_pwd $fish_color_command
+set hydro_color_git $fish_color_command
+set hydro_color_error $fish_color_error
+set hydro_color_prompt --dim $fish_color_command
+set hydro_color_duration --dim $fish_color_command
+
 # General exports
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH ~/.ripgreprc
