@@ -35,6 +35,15 @@
 		],
 		"description": "Adds an ERB comment"
 	},
+	"Comment Wrap": {
+		"prefix": "cw",
+		"body": [
+			"<!--<% if false %>",
+			"${TM_SELECTED_TEXT}",
+			"<% end %>-->"
+		],
+		"description": "Adds an ERB comment"
+	},
 	"if": {
 		"prefix": "if",
 		"body": [

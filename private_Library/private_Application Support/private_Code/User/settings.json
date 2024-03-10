@@ -1,9 +1,9 @@
 {
-  "amVim.smartRelativeLineNumbers": true,
-  "amVim.useSystemClipboard": true,
+  // "amVim.smartRelativeLineNumbers": true,
+  // "amVim.useSystemClipboard": true,
   // "editor.fontFamily": "Bitstream Vera Sans Mono",
   "editor.fontFamily": "JetBrains Mono",
-  "editor.fontSize": 14,
+  "editor.fontSize": 13,
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "editor.rulers": [
@@ -15,7 +15,7 @@
     "erb": "html",
     "html.erb": "html"
   },
-  // "explorer.autoReveal": "focusNoScroll",
+  "explorer.autoReveal": "focusNoScroll",
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "files.associations": {
@@ -26,11 +26,13 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
+  "git.enableSmartCommit": true,
   "ruby.specSaveFile": true,
-  "rubyLsp.formatter": "syntax_tree",
+  "rubyLsp.formatter": "none",
   "rubyLsp.rubyVersionManager": "asdf",
   "rubyLsp.enabledFeatures": {
     "codeActions": true,
+    "codeLens": false,
     "diagnostics": false,
     "documentHighlights": true,
     "documentLink": true,
@@ -38,21 +40,31 @@
     "foldingRanges": true,
     "formatting": true,
     "hover": true,
-    "inlayHint": true,
+    "inlayHint": false,
     "onTypeFormatting": true,
     "selectionRanges": true,
     "semanticHighlighting": true,
     "completion": true
   },
+  "security.workspace.trust.untrustedFiles": "open",
   "standard.autoFixOnSave": true,
   "standard.enable": true,
   "standardRuby.autofix": true,
   "tailwindCSS.emmetCompletions": true,
-  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontSize": 13,
+  "vim.easymotion": true,
+  "vim.highlightedyank.enable": true,
+  "vim.hlsearch": true,
+  "vim.incsearch": true,
+  "vim.leader": "<space>",
+  "vim.sneak": true,
+  "vim.surround": true,
+  "vim.useSystemClipboard": true,
+  "vim.visualstar": true,
   "vscode-erb-beautify.keepBlankLines": 1,
   "window.newWindowDimensions": "offset",
-  "workbench.activityBar.visible": false,
   "workbench.colorTheme": "Ayu Mirage",
+  "workbench.iconTheme": "ayu",
   "workbench.sideBar.location": "right",
   "[ruby]": {
     "editor.defaultFormatter": "testdouble.vscode-standard-ruby",
@@ -60,7 +72,65 @@
   "[javascript]": {
     "editor.defaultFormatter": "standard.vscode-standard",
   },
-  "security.workspace.trust.untrustedFiles": "open",
-  "git.enableSmartCommit": true,
-  "workbench.iconTheme": "ayu",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        "[",
+        "<space>"
+      ],
+      "commands": [
+        "editor.action.insertLineBefore",
+        "cursorDown"
+      ]
+    },
+    {
+      "before": [
+        "]",
+        "<space>"
+      ],
+      "commands": [
+        "editor.action.insertLineAfter",
+        "cursorUp"
+      ]
+    },
+    {
+      "before": [
+        "[",
+        "e"
+      ],
+      "commands": [
+        "editor.action.moveLinesUpAction"
+      ]
+    },
+    {
+      "before": [
+        "]",
+        "e"
+      ],
+      "commands": [
+        "editor.action.moveLinesDownAction"
+      ]
+    },
+    {
+      "before": [
+        "[",
+        "q"
+      ],
+      "commands": [
+        "goToPreviousReference"
+      ]
+    },
+    {
+      "before": [
+        "]",
+        "q"
+      ],
+      "commands": [
+        "goToNextReference"
+      ]
+    },
+  ],
+  "workbench.activityBar.location": "hidden",
+  "explorer.sortOrder": "mixed",
+  // "workbench.activityBar.location": "hidden"
 }

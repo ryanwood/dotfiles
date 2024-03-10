@@ -31,10 +31,5 @@
     "key": "shift+cmd+j",
     "command": "workbench.action.terminal.focus",
     "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+j",
-    "command": "editor.action.joinLines",
-    "when": "editorTextFocus && !extension.simpleVim.insertMode"
-  },
+  }
 ]

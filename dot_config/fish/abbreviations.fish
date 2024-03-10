@@ -103,5 +103,7 @@ abbr -a spfo      'bundle exec rspec --only-failures'
 abbr -a sps       'bundle exec standard --fix'
 abbr -a sp-s      'bundle exec rspec --exclude-pattern spec/system/**/*_spec.rb'
 abbr -a spv       'bundle exec slim-lint app/**/*.slim && bundle exec erblint --lint-all'
-
-
+abbr -a t         'bin/rails test'
+abbr -a ta        'bin/rails test:all'
+abbr -a tm        'bin/rails test:models'
+abbr -a ts        'bin/rails test:system'
