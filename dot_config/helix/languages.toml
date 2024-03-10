@@ -1,0 +1,12 @@
+[language-server.emmet-ls]
+args = ["--stdio"]
+command="emmet-ls"
+
+[[language]]
+name = "erb"
+language-servers = [ "emmet-ls" ]
+
+[[language]]
+name = "ruby"
+formatter = { command = "bundle", args = ["exec", "standardrb", "--stdin", "foo.rb", "--fix", "--stderr"] }
+auto-format = true
