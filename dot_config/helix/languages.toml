@@ -10,3 +10,13 @@ language-servers = [ "emmet-ls" ]
 name = "ruby"
 formatter = { command = "bundle", args = ["exec", "standardrb", "--stdin", "foo.rb", "--fix", "--stderr"] }
 auto-format = true
+
+[[language]]
+name = "erb"
+formatter = { command = "htmlbeautifier", args = ["--keep-blank-lines", "1"] }
+auto-format = true
+
+[[language]]
+name = "javascript"
+formatter = { command = "standard", args = ["--stdin", "--fix"] }
+auto-format = true
