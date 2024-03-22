@@ -1,0 +1,12 @@
+git:
+  log:
+    showGraph: always
+customCommands:
+  - key: 'N'
+    context: 'localBranches'
+    description: 'Merge selected branch with merge commit (--no-ff)'
+    prompts:
+      - type: 'confirm'
+        title: 'Merge (no fast-forward)'
+        body: "Are you sure you want to no-ff merge '{{.SelectedLocalBranch.Name}}' into '{{.CheckedOutBranch.Name}}'?"
+    command: 'git merge --no-ff {{.SelectedLocalBranch.Name}}'
