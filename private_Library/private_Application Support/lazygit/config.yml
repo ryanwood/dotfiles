@@ -1,13 +1,22 @@
 git:
-  allBranchesLogCmd: 'git log --graph --all --oneline --color=always --decorate --date=relative'
+  allBranchesLogCmd: "git log --graph --all --oneline --color=always --decorate --date=relative"
   log:
     showGraph: always
 customCommands:
-  - key: 'N'
-    context: 'localBranches'
-    description: 'Merge selected branch with merge commit (--no-ff)'
+  - key: "N"
+    context: "localBranches"
+    description: "Merge selected branch with merge commit (--no-ff)"
     prompts:
-      - type: 'confirm'
-        title: 'Merge (no fast-forward)'
+      - type: "confirm"
+        title: "Merge (no fast-forward)"
         body: "Are you sure you want to no-ff merge '{{.SelectedLocalBranch.Name}}' into '{{.CheckedOutBranch.Name}}'?"
-    command: 'git merge --no-ff {{.SelectedLocalBranch.Name}}'
+    command: "git merge --no-ff {{.SelectedLocalBranch.Name}}"
+  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git
+  - key: "u"
+    context: "files"
+    description: "gunwip"
+    command: 'git rev-list --max-count=1 --format="%s" HEAD | grep -q "\-\-wip\-\-" && git reset HEAD~1; exit 0'
+  - key: "U"
+    context: "files"
+    description: "gwip"
+    command: 'git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign --message "--wip-- [skip ci]"'
