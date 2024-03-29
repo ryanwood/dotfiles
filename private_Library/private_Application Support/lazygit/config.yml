@@ -1,4 +1,5 @@
 git:
+  allBranchesLogCmd: 'git log --graph --all --oneline --color=always --decorate --date=relative'
   log:
     showGraph: always
 customCommands:
