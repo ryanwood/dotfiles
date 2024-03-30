@@ -9,3 +9,8 @@ vim.keymap.set("n", "[<space>", "O<Esc>j", { desc = "Add line above" })
 vim.keymap.set("n", "]<space>", "o<Esc>k", { desc = "Add line below" })
 vim.keymap.set("n", "[l", "ddkP", { desc = "Swap with line above" })
 vim.keymap.set("n", "]l", "ddp", { desc = "Swap with line below" })
+
+vim.keymap.set("n", "<leader>rc", ":Econtroller<cr>", { desc = "Rails: Go to controller" })
+vim.keymap.set("n", "<leader>rv", ":Eview<cr>", { desc = "Rails: Go to view" })
+vim.keymap.set("n", "<leader>rm", ":Emodel ", { desc = "Rails: Go to model" })
+vim.keymap.set("n", "<leader>re", ":Extract ", { desc = "Rails: Extract partial" })
