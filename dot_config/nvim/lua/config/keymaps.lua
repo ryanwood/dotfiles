@@ -17,3 +17,5 @@ vim.keymap.set("n", "<leader>rm", ":Emodel ", { desc = "Rails: Go to model" })
 vim.keymap.set("n", "<leader>re", ":Extract ", { desc = "Rails: Extract partial" })
 
 vim.keymap.set("n", "<leader><tab>s", "<cmd>tab split<cr>", { desc = "Split buffer into tab" })
+
+vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory" })
