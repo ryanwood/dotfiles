@@ -14,3 +14,5 @@ vim.keymap.set("n", "<leader>rc", ":Econtroller<cr>", { desc = "Rails: Go to con
 vim.keymap.set("n", "<leader>rv", ":Eview<cr>", { desc = "Rails: Go to view" })
 vim.keymap.set("n", "<leader>rm", ":Emodel ", { desc = "Rails: Go to model" })
 vim.keymap.set("n", "<leader>re", ":Extract ", { desc = "Rails: Extract partial" })
+
+vim.keymap.set("n", "<leader><tab>s", "<cmd>tab split<cr>", { desc = "Split buffer into tab" })
