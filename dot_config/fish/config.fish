@@ -6,6 +6,8 @@ end
 
 fish_add_path ~/.bin /opt/homebrew/bin /Applications/Postgres.app/Contents/Versions/latest/bin
 
+source ~/.config/fish/themes/tokyonight_night.fish
+
 # Hydro prompt settings
 set hydro_color_pwd $fish_color_command
 set hydro_color_git $fish_color_command
@@ -20,4 +22,3 @@ set -gx FZF_DEFAULT_COMMAND "rg --files"
 set -gx FZF_DEFAULT_OPTS -m
 
 source ~/.config/fish/abbreviations.fish
-
