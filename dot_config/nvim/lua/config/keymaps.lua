@@ -19,3 +19,12 @@ vim.keymap.set("n", "<leader>re", ":Extract ", { desc = "Rails: Extract partial"
 vim.keymap.set("n", "<leader><tab>s", "<cmd>tab split<cr>", { desc = "Split buffer into tab" })
 
 vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory" })
+
+vim.keymap.set("n", "<leader>wh", "<C-w>H", { desc = "Move Window Left" })
+vim.keymap.set("n", "<leader>wj", "<C-w>J", { desc = "Move Window Down" })
+vim.keymap.set("n", "<leader>wk", "<C-w>K", { desc = "Move Window Up" })
+vim.keymap.set("n", "<leader>wl", "<C-w>L", { desc = "Move Window Right" })
+
+-- Fix split to use the "\" vs "|"" so you don't need shift
+vim.keymap.del("n", "<leader>|")
+vim.keymap.set("n", "<leader>\\", "<C-w>v", { desc = "Split Window Right", remap = true })
