@@ -1,6 +1,9 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
+    keys = {
+      { "<leader>fd", "<cmd>Telescope find_files cwd=%:p:h<cr>", desc = "Find files (dir of current file)" },
+    },
     opts = {
       defaults = {
         mappings = {
