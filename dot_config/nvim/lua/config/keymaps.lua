@@ -34,7 +34,21 @@ vim.keymap.del("n", "<leader>|")
 vim.keymap.set("n", "<leader>\\", "<C-w>v", { desc = "Split Window Right", remap = true })
 
 -- Tabs
-vim.keymap.set("n", "<leader>[", "gt", { desc = "Previous Tab" })
-vim.keymap.set("n", "<leader>]", "gT", { desc = "Next Tab" })
 vim.keymap.set("n", "<leader><tab>s", "<cmd>tab split<cr>", { desc = "Split buffer into tab" })
 vim.keymap.set("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close all tabs but current" })
+
+-- These commands will move the current buffer backwards or forwards in the bufferline
+vim.keymap.set("n", "<leader>b[", "<cmd>BufferLineMovePrev<cr>", { desc = "Move buffer to the left" })
+vim.keymap.set("n", "<leader>b]", "<cmd>BufferLineMoveNext<cr>", { desc = "Move buffer to the right" })
+vim.keymap.set(
+  "n",
+  "<leader>b{",
+  "<cmd>lua require('bufferline').move_to(1)<cr>",
+  { desc = "Move buffer to the first" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>b}",
+  "<cmd>lua require('bufferline').move_to(-1)<cr>",
+  { desc = "Move buffer to the last" }
+)
