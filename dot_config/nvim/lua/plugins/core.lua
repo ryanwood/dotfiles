@@ -1,8 +1,4 @@
 return {
-  -- Remove defaults
-  -- Bufferline is just too noisy up top
-  { "akinsho/bufferline.nvim", enabled = false },
-
   -- Theme
   {
     "folke/tokyonight.nvim",
@@ -84,11 +80,44 @@ return {
       },
     },
   },
-
-  -- Rails Development
-  { "tpope/vim-rails" },
+  -- {
+  --   "andrewferrier/wrapping.nvim",
+  --   config = function()
+  --     require("wrapping").setup()
+  --   end,
+  -- },
+  {
+    "tpope/vim-rails",
+    config = function()
+      -- This was causing htmlbeatuifier to format yaml files which broke them...
+      -- disable autocmd set filetype=eruby.yaml
+      -- https://www.reddit.com/r/neovim/comments/z7vqgu/syntax_highlighting_for_erubyyaml_with_railsvim/
+      vim.api.nvim_create_autocmd({ "BufNewFile", "BufReadPost" }, {
+        pattern = { "*.yml" },
+        callback = function()
+          vim.bo.filetype = "yaml"
+        end,
+      })
+    end,
+  },
   { "tpope/vim-liquid" },
   { "slim-template/vim-slim" },
+  { "mpas/marp-nvim" },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        solargraph = {
+          cmd = {
+            "asdf",
+            "exec",
+            "solargraph",
+            "stdio",
+          },
+        },
+      },
+    },
+  },
   {
     "stevearc/conform.nvim",
     opts = {
@@ -99,7 +128,11 @@ return {
       },
       formatters_by_ft = {
         eruby = { "htmlbeautifier" },
+        html = { "prettier" },
         javascript = { "standardjs" },
+        json = { "prettier" },
+        markdown = { "prettier" },
+        yaml = { "prettier" },
       },
     },
   },
@@ -116,6 +149,38 @@ return {
     opts = {
       defaults = {
         ["<leader>r"] = { name = "+rails" },
+      },
+    },
+  },
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "olimorris/neotest-rspec",
+      "zidhuss/neotest-minitest",
+    },
+    opts = {
+      adapters = {
+        ["neotest-rspec"] = {
+          -- NOTE: By default neotest-rspec uses the system wide rspec gem instead of the one through bundler
+          rspec_cmd = function()
+            return vim.tbl_flatten({
+              "bundle",
+              "exec",
+              "rspec",
+            })
+          end,
+        },
+        ["neotest-minitest"] = {
+          -- NOTE: By default neotest-minitest uses the `bundle exec ruby -Itest`
+          test_cmd = function()
+            return vim.tbl_flatten({
+              "bundle",
+              "exec",
+              "rails",
+              "test",
+            })
+          end,
+        },
       },
     },
   },
