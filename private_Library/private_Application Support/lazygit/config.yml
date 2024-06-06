@@ -15,6 +15,10 @@ customCommands:
   - key: "u"
     context: "files"
     description: "gunwip"
+    prompts:
+      - type: "confirm"
+        title: "gunwip?"
+        body: "Are you sure you want to pop this commit back into the working tree?"
     command: 'git rev-list --max-count=1 --format="%s" HEAD | grep -q "\-\-wip\-\-" && git reset HEAD~1; exit 0'
   - key: "U"
     context: "files"
