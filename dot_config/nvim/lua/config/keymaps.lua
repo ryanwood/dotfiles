@@ -6,7 +6,9 @@ vim.keymap.set("n", "<D-s>", ":w<cr>", { desc = "Save file" })
 vim.keymap.set("i", "<D-s>", "<esc>:w<cr>i", { desc = "Save file" })
 vim.keymap.set("n", "<leader>fw", ":w<cr>", { desc = "Save file" })
 
-vim.keymap.set("n", "<leader>z", "zMzvzz", { desc = "Refocus folds" })
+vim.keymap.set("n", "<leader>z", "<cmd>ZenMode<cr>", { desc = "Toggle ZenMode" })
+
+vim.keymap.set("n", "zx", "zMzvzz", { desc = "Refocus folds" })
 
 -- Missing unimpaired space mapping
 vim.keymap.set("n", "[<space>", "O<Esc>j", { desc = "Add line above" })
