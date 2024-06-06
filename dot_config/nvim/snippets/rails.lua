@@ -30,3 +30,28 @@ ls.add_snippets("eruby", {
     t(" %>"),
   }),
 })
+
+ls.add_snippets("ruby", {
+  s(
+    { trig = "desc", dscr = "describe block" },
+    fmt(
+      [[
+        describe "{}" do
+          {}
+        end
+      ]],
+      { i(1), i(2) }
+    )
+  ),
+  s(
+    { trig = "it", dscr = "it block" },
+    fmt(
+      [[
+        it "{}" do
+          {}
+        end
+      ]],
+      { i(1), i(2) }
+    )
+  ),
+})
