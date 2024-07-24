@@ -15,10 +15,10 @@ set -gx FZF_DEFAULT_OPTS -m
 
 source ~/.config/fish/abbreviations.fish
 
-fish_add_path /Users/ryanwood/bin /opt/homebrew/bin /Applications/Postgres.app/Contents/Versions/latest/bin
-# ASDF prepends to the PATH directly so they are not in `fish_user_path`. Unfortunately we need to
-# use `fish_add_path` so that the order is maintained in subshells and prevents reordering in TMUX.
-fish_add_path "$ASDF_DIR/bin"
-fish_add_path "$HOME/.asdf/shims"
+fish_add_path /opt/homebrew/bin /Applications/Postgres.app/Contents/Versions/latest/bin
 source /opt/homebrew/opt/asdf/libexec/asdf.fish
-fish_add_path .git/safe/../../bin
+# ASDF prepends to the PATH directly so they are not in `fish_user_path`. Unfortunately we need to
+# use `fish_add_path` with --move so that the order is maintained in subshells and prevents reordering in TMUX.
+fish_add_path -m "$ASDF_DIR/bin"
+fish_add_path -m "$HOME/.asdf/shims"
+set -p PATH .git/safe/../../bin
