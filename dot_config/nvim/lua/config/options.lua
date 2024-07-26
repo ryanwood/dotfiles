@@ -3,3 +3,5 @@
 -- Add any additional options here
 
 vim.opt.colorcolumn = "120"
+vim.g.lazyvim_ruby_lsp = "ruby_lsp"
+vim.g.lazyvim_ruby_formatter = "standardrb"

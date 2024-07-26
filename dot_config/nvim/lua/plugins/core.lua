@@ -80,12 +80,6 @@ return {
       },
     },
   },
-  -- {
-  --   "andrewferrier/wrapping.nvim",
-  --   config = function()
-  --     require("wrapping").setup()
-  --   end,
-  -- },
   {
     "tpope/vim-rails",
     config = function()
@@ -103,21 +97,6 @@ return {
   { "tpope/vim-liquid" },
   { "slim-template/vim-slim" },
   { "mpas/marp-nvim" },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        solargraph = {
-          cmd = {
-            "asdf",
-            "exec",
-            "solargraph",
-            "stdio",
-          },
-        },
-      },
-    },
-  },
   {
     "stevearc/conform.nvim",
     opts = {
