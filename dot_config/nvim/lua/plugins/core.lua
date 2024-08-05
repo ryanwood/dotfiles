@@ -38,15 +38,14 @@ return {
   { "folke/twilight.nvim" },
   {
     "stevearc/oil.nvim",
-    opts = {},
-    -- Optional dependencies
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = { skip_confirm_for_simple_edits = true },
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
   },
   {
     "Wansmer/treesj",
     keys = {
       {
-        "<leader>cs",
+        "<leader>cj",
         function()
           require("treesj").toggle()
         end,
@@ -103,12 +102,12 @@ return {
       servers = {
         -- https://github.com/ianchesal/dotfiles/blob/main/nvim/lua/plugins/nvim-lspconfig.lua#L32
         ruby_lsp = {
-          cmd = { "bundle", "exec", "ruby-lsp" },
+          cmd = { "asdf", "exec", "ruby-lsp" },
           -- init_options = { formatter = "auto", },
         },
-        standardrb = {
-          cmd = { "bundle", "exec", "standardrb" },
-        },
+        -- standardrb = {
+        --   cmd = { "asdf", "exec", "standardrb" },
+        -- },
       },
     },
   },
@@ -155,7 +154,6 @@ return {
     opts = {
       adapters = {
         ["neotest-rspec"] = {
-          -- NOTE: By default neotest-rspec uses the system wide rspec gem instead of the one through bundler
           rspec_cmd = function()
             return vim.tbl_flatten({
               "bundle",
@@ -165,7 +163,6 @@ return {
           end,
         },
         ["neotest-minitest"] = {
-          -- NOTE: By default neotest-minitest uses the `bundle exec ruby -Itest`
           test_cmd = function()
             return vim.tbl_flatten({
               "bundle",
