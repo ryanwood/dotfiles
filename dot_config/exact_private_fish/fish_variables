@@ -14,7 +14,7 @@ SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejethrokuan/z\x1efishingline/cd\x2
 SETUVAR _fisher_rstacruz_2F_fish_2D_asdf_files:\x7e/\x2econfig/fish/conf\x2ed/asdf\x2efish\x1e\x7e/\x2econfig/fish/completions/asdf\x2efish
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR _fisher_vitallium_2F_tokyonight_2D_fish_files:\x7e/\x2econfig/fish/themes/TokyoNight\x20Day\x2etheme\x1e\x7e/\x2econfig/fish/themes/TokyoNight\x20Moon\x2etheme\x1e\x7e/\x2econfig/fish/themes/TokyoNight\x20Night\x2etheme\x1e\x7e/\x2econfig/fish/themes/TokyoNight\x20Storm\x2etheme
-SETUVAR _hydro_git_5026:main\u2022\x20\u21913\x20
+SETUVAR _hydro_git_5026:main\u2022\x20\u21915\x20
 SETUVAR fish_color_autosuggestion:565f89
 SETUVAR fish_color_cancel:\x1d
 SETUVAR fish_color_command:7dcfff
