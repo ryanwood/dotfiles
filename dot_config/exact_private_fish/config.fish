@@ -10,4 +10,17 @@ if status is-interactive
 end
 
 set -gx EDITOR nvim
+
 source ~/.config/fish/abbreviations.fish
+
+# Add to fix PATH order in TMUX
+fish_add_path --path --move "$ASDF_DIR/bin"
+fish_add_path --path --move "$HOME/.asdf/shims"
+
+# Remove and add (required not to duplicate in TMUX shell)
+# https://github.com/fish-shell/fish-shell/issues/2639#issuecomment-451260584
+set -l git_safe .git/safe/../../bin
+if set -l index (contains -i -- $git_safe $PATH)
+    set -e PATH[$index]
+end
+set -p PATH $git_safe
