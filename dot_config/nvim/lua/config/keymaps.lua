@@ -13,6 +13,8 @@ vim.keymap.set("n", "zx", "zMzvzz", { desc = "Refocus folds" })
 -- Missing unimpaired space mapping
 vim.keymap.set("n", "[<space>", "O<Esc>j", { desc = "Add line above" })
 vim.keymap.set("n", "]<space>", "o<Esc>k", { desc = "Add line below" })
+vim.keymap.set("n", "[p", ":put!<CR>", { desc = "Paste linewise above" })
+vim.keymap.set("n", "]p", ":put<CR>", { desc = "Paste linewise below" })
 
 -- Rails
 vim.keymap.set("n", "<leader>rc", ":Econtroller<cr>", { desc = "Rails: Go to controller" })
