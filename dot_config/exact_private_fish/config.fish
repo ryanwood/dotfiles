@@ -14,6 +14,7 @@ set -gx EDITOR nvim
 source ~/.config/fish/abbreviations.fish
 
 # Add to fix PATH order in TMUX
+fish_add_path --path /Applications/Postgres.app/Contents/Versions/14/bin
 fish_add_path --path --move "$ASDF_DIR/bin"
 fish_add_path --path --move "$HOME/.asdf/shims"
 
