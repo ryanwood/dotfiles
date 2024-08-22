@@ -13,6 +13,8 @@ vim.keymap.set("n", "[<space>", "O<Esc>j", { desc = "Add line above" })
 vim.keymap.set("n", "]<space>", "o<Esc>k", { desc = "Add line below" })
 vim.keymap.set("n", "[p", ":put!<CR>", { desc = "Paste linewise above" })
 vim.keymap.set("n", "]p", ":put<CR>", { desc = "Paste linewise below" })
+vim.keymap.set("n", "[e", "ddkP", { desc = "Move to line above" })
+vim.keymap.set("n", "]e", "ddp", { desc = "Move to line below" })
 
 -- Rails
 vim.keymap.set("n", "<leader>rc", ":Econtroller<cr>", { desc = "Rails: Go to controller" })
@@ -52,3 +54,6 @@ vim.keymap.set(
   "<cmd>lua require('bufferline').move_to(-1)<cr>",
   { desc = "Move buffer to the last" }
 )
+
+-- Copy current path to clipboard, :nmap cp :let @" = expand("%")<cr>
+vim.keymap.set("n", "<leader>fy", ':let @+ = expand("%")<cr>', { desc = "Copy current file path to clipboard" })

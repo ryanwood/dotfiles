@@ -1,5 +1,6 @@
 return {
   -- Theme
+  { "catppuccin", enabled = false },
   {
     "folke/tokyonight.nvim",
     lazy = false,
