@@ -13,10 +13,18 @@ set -gx EDITOR nvim
 
 source ~/.config/fish/abbreviations.fish
 
-# Add to fix PATH order in TMUX
-fish_add_path --path /Applications/Postgres.app/Contents/Versions/14/bin
-fish_add_path --path --move "$ASDF_DIR/bin"
-fish_add_path --path --move "$HOME/.asdf/shims"
+fish_add_path --path --move /Applications/Postgres.app/Contents/Versions/14/bin
+
+# MISE config
+~/.local/bin/mise activate fish | source
+# Ensure it's moved to the top in TMUX or a subshell
+fish_add_path --path --move ~/.local/bin
+
+## ASDF config
+#source /opt/homebrew/opt/asdf/libexec/asdf.fish
+## Add to fix PATH order in TMUX
+#fish_add_path --path --move "$ASDF_DIR/bin"
+#fish_add_path --path --move "$HOME/.asdf/shims"
 
 # Remove and add (required not to duplicate in TMUX shell)
 # https://github.com/fish-shell/fish-shell/issues/2639#issuecomment-451260584
