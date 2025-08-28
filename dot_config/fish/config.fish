@@ -28,8 +28,8 @@ fish_add_path --path --move ~/.local/bin
 
 # Remove and add (required not to duplicate in TMUX shell)
 # https://github.com/fish-shell/fish-shell/issues/2639#issuecomment-451260584
-set -l git_safe .git/safe/../../bin
-if set -l index (contains -i -- $git_safe $PATH)
-    set -e PATH[$index]
-end
-set -p PATH $git_safe
+# set -l git_safe .git/safe/../../bin
+# if set -l index (contains -i -- $git_safe $PATH)
+#     set -e PATH[$index]
+# end
+# set -p PATH $git_safe
