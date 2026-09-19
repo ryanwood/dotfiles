@@ -1,0 +1,106 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "agent_servers": {
+    "claude": {
+      "default_model": "opus",
+      "default_mode": "default"
+    }
+  },
+  "icon_theme": "Catppuccin Macchiato",
+  "agent": {
+    "dock": "right",
+    "default_profile": "ask"
+  },
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+  // "theme": "Tokyo Night Storm",
+  "theme": "Catppuccin Macchiato - No Italics",
+  "vim_mode": true,
+  "ui_font_size": 15,
+  "buffer_font_size": 14,
+  // "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_family": "CaskaydiaMono Nerd Font",
+  "languages": {
+    "Ruby": {
+      "language_servers": [
+        "ruby-lsp",
+        // "!rubocop",
+        "!solargraph",
+        "tailwindcss-language-server"
+      ]
+    },
+    "JavaScript": {
+      "formatter": {
+        "external": {
+          "command": "standard",
+          "arguments": ["--fix", "--stdin", "{buffer_path}"] // Add any required arguments here
+        }
+      },
+      "format_on_save": "on"
+    },
+    "HTML+ERB": {
+      "language_servers": ["herb", "ruby-lsp"],
+      "formatter": [
+        {
+          "external": { "command": "herb-format", "arguments": ["-"] }
+        }
+      ]
+    },
+    "JS+ERB": {
+      "language_servers": ["ruby-lsp"]
+    },
+    "YAML+ERB": {
+      "language_servers": ["ruby-lsp"]
+    },
+    "CSS": {
+      "language_servers": ["tailwindcss-language-server"]
+    }
+  },
+  "lsp": {
+    "ruby-lsp": {
+      "initialization_options": {
+        "enabledFeatures": {
+          "diagnostics": false
+        },
+        "formatter": "standard",
+        "linters": ["standard"]
+      }
+    },
+    // "rubocop": {
+    //   "initialization_options": {
+    //     "safeAutocorrect": false
+    //   }
+    // },
+    "tailwindcss-language-server": {
+      "settings": {
+        "includeLanguages": {
+          "erb": "html",
+          "ruby": "html"
+        },
+        "experimental": {
+          "classRegex": ["\\bclass:\\s*['\"]([^'\"]*)['\"]"]
+        }
+      }
+    }
+  }
+}
