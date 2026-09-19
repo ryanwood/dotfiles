@@ -43,16 +43,16 @@ vim.keymap.set("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close all ta
 vim.keymap.set("n", "<leader>b[", "<cmd>BufferLineMovePrev<cr>", { desc = "Move buffer to the left" })
 vim.keymap.set("n", "<leader>b]", "<cmd>BufferLineMoveNext<cr>", { desc = "Move buffer to the right" })
 vim.keymap.set(
-  "n",
-  "<leader>b{",
-  "<cmd>lua require('bufferline').move_to(1)<cr>",
-  { desc = "Move buffer to the first" }
+    "n",
+    "<leader>b{",
+    "<cmd>lua require('bufferline').move_to(1)<cr>",
+    { desc = "Move buffer to the first" }
 )
 vim.keymap.set(
-  "n",
-  "<leader>b}",
-  "<cmd>lua require('bufferline').move_to(-1)<cr>",
-  { desc = "Move buffer to the last" }
+    "n",
+    "<leader>b}",
+    "<cmd>lua require('bufferline').move_to(-1)<cr>",
+    { desc = "Move buffer to the last" }
 )
 
 -- Copy current path to clipboard, :nmap cp :let @" = expand("%")<cr>
