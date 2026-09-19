@@ -1,7 +1,8 @@
 git:
-  allBranchesLogCmd: "git log --graph --all --oneline --color=always --decorate --date=relative"
   log:
     showGraph: always
+  allBranchesLogCmds:
+    - git log --graph --all --oneline --color=always --decorate --date=relative
 customCommands:
   - key: "N"
     context: "localBranches"

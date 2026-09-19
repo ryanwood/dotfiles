@@ -1,17 +1,17 @@
 shell-integration = fish
-font-family =  CaskaydiaMono Nerd Font Mono
-font-style-italic = false
-# font-family = JetBrains Mono
-# font-family = JetBrainsMono Nerd Font Mono
+# font-family =  CaskaydiaMono Nerd Font Mono
+font-family = JetBrainsMono Nerd Font Mono
 font-size = 14
-theme = catppuccin-macchiato
+font-style-italic = false
+theme = Catppuccin Macchiato
 # theme = tokyonight-storm
 mouse-hide-while-typing = true
 scrollback-limit = 1000000
 window-padding-x = 10
 window-padding-y = 10
-background-opacity = 0.9
-background-blur = true
+window-save-state = always
+# background-opacity = 0.9
+# background-blur = true
 
 # window-save-state = always
 
@@ -59,3 +59,4 @@ background-blur = true
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
+keybind = shift+enter=text:\x1b\r

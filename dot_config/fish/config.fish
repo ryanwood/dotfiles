@@ -13,7 +13,7 @@ set -gx EDITOR nvim
 
 source ~/.config/fish/abbreviations.fish
 
-fish_add_path --path --move /Applications/Postgres.app/Contents/Versions/14/bin
+fish_add_path --path --move /Applications/Postgres.app/Contents/Versions/17/bin
 
 # MISE config
 ~/.local/bin/mise activate fish | source
