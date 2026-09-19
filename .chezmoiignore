@@ -1,0 +1,6 @@
+{{- if eq .chezmoi.os "linux" }}
+.config/fish
+.config/kitty
+.config/zed
+/Library
+{{- end }}
