@@ -2,5 +2,5 @@
 .config/fish
 .config/kitty
 .config/zed
-/Library
+Library
 {{- end }}
