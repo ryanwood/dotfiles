@@ -86,7 +86,6 @@ abbr -a hlts 'heroku logs -t -r staging'
 abbr -a hrcp 'heroku run console -r production'
 abbr -a hrcs 'heroku run console -r staging'
 abbr -a lg lazygit
-abbr -a pt papertrail
 abbr -a rc 'bin/rails console'
 abbr -a rcs 'bin/rails console --sandbox'
 abbr -a rdb 'bin/rails dbconsole'

@@ -1,6 +1,5 @@
 shell-integration = fish
 # font-family =  CaskaydiaMono Nerd Font Mono
-# font-family = JetBrains Mono
 font-family = JetBrainsMono Nerd Font Mono
 font-size = 14
 font-style-italic = false
