@@ -4,3 +4,9 @@
 .config/zed
 Library
 {{- end }}
+{{- if ne .chezmoi.os "linux" }}
+# Hummingbird (Ubuntu) only. The Mac shell is fish, and its CLI tools come
+# from Homebrew; mise there only switches Ruby/Node via ~/.tool-versions.
+.bashrc
+.config/mise
+{{- end }}

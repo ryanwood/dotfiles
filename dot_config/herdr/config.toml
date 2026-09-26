@@ -148,6 +148,24 @@ prefix = "ctrl+space"
 # width = "80%"
 # height = "80%"
 
+# Worktrees go through the worktrunk plugin so its hooks run (per-worktree
+# database, agent deny rules; see ~/.config/worktrunk/config.toml). This
+# replaces herdr's built-in new_worktree on the same key, which runs no hooks
+# and would leave an agent on the shared development database. The plugin's
+# merge actions are deliberately unbound: they merge locally into main,
+# bypassing the PR flow.
+[[keys.command]]
+key = "prefix+shift+g"
+type = "plugin_action"
+command = "worktrunk.open"
+description = "Worktree: switch / create from default branch"
+
+[[keys.command]]
+key = "prefix+shift+k"
+type = "plugin_action"
+command = "worktrunk.remove"
+description = "Worktree: remove"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]
