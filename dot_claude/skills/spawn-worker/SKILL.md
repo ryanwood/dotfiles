@@ -27,7 +27,7 @@ PR says.
 
 Names come in two kinds, and they are chosen separately:
 
-- **Workspace name** (the herdr label and the agent name) names the *issue*,
+- **Workspace name** (the herdr label; the agent name follows it) names the *issue*,
   not the work: its number, then a short description of the issue
   (`679-log-bloat`, `673-gallery-sort`). Never `investigate-`, `fix-` or
   `research-`. A workspace is the sandbox for everything on that issue, and
@@ -43,9 +43,11 @@ branches in the same workspace are cut inside the worktree (`git switch -c
 
 ## Start a worker
 
-Run from the repo's main checkout. Replace `<branch>` with the branch name and
-`<name>` with the workspace name (lowercase letters, digits and `-`, at most
-32 characters). It is both the herdr label and the agent name.
+Run from the repo's main checkout. Replace `<branch>` with the branch name,
+`<label>` with the workspace name, and `<name>` with the agent name. herdr
+requires an agent name to start with a lowercase letter (then lowercase
+letters, digits, `-` or `_`, at most 32 characters), so an issue workspace
+`679-log-bloat` gets the agent `issue-679-log-bloat`.
 
 ```bash
 # 1. Worktree + hooks. A failing hook exits non-zero: stop and report its output.
@@ -54,7 +56,7 @@ path=$(jq -r .path <<<"$out")
 
 # 2. A herdr workspace on it.
 pane=$(herdr worktree open --cwd "$(git rev-parse --show-toplevel)" --path "$path" \
-  --label <name> --no-focus --json | jq -r .result.root_pane.pane_id)
+  --label <label> --no-focus --json | jq -r .result.root_pane.pane_id)
 
 # 3. Claude in that workspace.
 herdr agent start <name> --kind claude --pane "$pane" --timeout 90000
