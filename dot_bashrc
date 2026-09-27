@@ -127,3 +127,6 @@ eval "$(~/.local/bin/mise activate bash)"
 # These are overrides to Deerlab system specs to find the Chrome binary
 export CHROME_NO_SANDBOX=1
 export CHROME_BIN=$(find ~/.cache/selenium/chrome -name chrome -type f | head -1)
+
+# Custom prompt (path + git branch). Delete this line to revert.
+source ~/.bash_prompt

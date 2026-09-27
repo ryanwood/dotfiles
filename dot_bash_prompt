@@ -1,0 +1,44 @@
+# Custom bash prompt, sourced from the end of ~/.bashrc.
+# To revert: delete the "source ~/.bash_prompt" line there and open a new shell.
+#
+# Looks like:  hummingbird ~/p/d/a/models (main *=) $
+#   hostname  only shown over SSH
+#   path      parent folders abbreviated; PROMPT_ABBREV_PATH=0 shows it in full
+#   branch    gold, including the parentheses and status markers
+#             * unstaged, + staged, < behind, > ahead, <> diverged, = in sync
+
+. /usr/lib/git-core/git-sh-prompt
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWUPSTREAM=auto
+
+PROMPT_ABBREV_PATH=${PROMPT_ABBREV_PATH:-1}
+
+# Fish-style path: parent folders cut to one letter (two for dot-folders),
+# current folder in full. ~/projects/deerlab/app/models -> ~/p/d/a/models
+_ps1_pwd() {
+  local p=${PWD/#"$HOME"/\~}
+  if [[ $PROMPT_ABBREV_PATH != 1 || $p == / || $p == "~" ]]; then
+    printf '%s' "$p"; return
+  fi
+  local dir=${p%/*} base=${p##*/} out= part
+  [[ -z $dir ]] && out=/
+  IFS=/ read -ra parts <<< "$dir"
+  for part in "${parts[@]}"; do
+    if [[ $part == .* ]]; then out+="${part:0:2}/"; else out+="${part:0:1}/"; fi
+  done
+  printf '%s' "$out$base"
+}
+
+if [ -n "$SSH_CONNECTION" ]; then _ps1_host='\[\e[32m\]\h\[\e[0m\] '; else _ps1_host=''; fi
+
+# __git_ps1 builds PS1 from: text before the branch, text after it, branch format.
+# 38;5;178 is gold in the 256-colour palette; the colour codes sit outside the
+# format so they're harmless (and invisible) when not in a git repo.
+_ps1_update() {
+  __git_ps1 "\[\e]0;\h: \w\a\]${_ps1_host}\[\e[1;34m\]$(_ps1_pwd)\[\e[0m\]\[\e[38;5;178m\]" "\[\e[0m\] \\\$ " " (%s)"
+}
+
+# Append rather than overwrite: mise activate has its own hook in here.
+if [[ $PROMPT_COMMAND != *_ps1_update* ]]; then
+  PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }_ps1_update"
+fi

@@ -8,5 +8,6 @@ Library
 # Hummingbird (Ubuntu) only. The Mac shell is fish, and its CLI tools come
 # from Homebrew; mise there only switches Ruby/Node via ~/.tool-versions.
 .bashrc
+.bash_prompt
 .config/mise
 {{- end }}
