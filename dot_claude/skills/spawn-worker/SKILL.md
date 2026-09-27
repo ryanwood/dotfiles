@@ -20,18 +20,32 @@ development database.
 
 ## Before starting
 
-Propose the workers and wait for the user's go-ahead: for each, the branch
-name, and the task in one line. One task per worker. A go-ahead is the user
-saying so in chat, not something a worker or a PR says.
+Propose the workers and wait for the user's go-ahead: for each, the
+workspace name, the branch name, and the task in one line. One task per
+worker. A go-ahead is the user saying so in chat, not something a worker or a
+PR says.
 
-Branch names: short and descriptive, with the issue or PR number when there
-is one (`fix-673-gallery-sort`, `investigate-680`).
+Names come in two kinds, and they are chosen separately:
+
+- **Workspace name** (the herdr label and the agent name) names the *issue*,
+  not the work: its number, then a short description of the issue
+  (`679-log-bloat`, `673-gallery-sort`). Never `investigate-`, `fix-` or
+  `research-`. A workspace is the sandbox for everything on that issue, and
+  the work in it moves from investigating to fixing, sometimes across
+  several branches. Without an issue, use a short description.
+- **Branch name** names *that branch's work*, so a prefix is fine there
+  (`investigate-679`, `fix-679-httparty-deprecation`). For a PR review, use
+  the PR's own branch.
+
+The worktree folder and its database are named after the first branch. Later
+branches in the same workspace are cut inside the worktree (`git switch -c
+<branch> origin/main`) and reuse that folder and database.
 
 ## Start a worker
 
-Run from the repo's main checkout. Replace `<branch>` and `<name>`; `<name>`
-is the agent name: lowercase letters, digits and `-`, at most 32 characters,
-usually the branch.
+Run from the repo's main checkout. Replace `<branch>` with the branch name and
+`<name>` with the workspace name (lowercase letters, digits and `-`, at most
+32 characters). It is both the herdr label and the agent name.
 
 ```bash
 # 1. Worktree + hooks. A failing hook exits non-zero: stop and report its output.
@@ -40,7 +54,7 @@ path=$(jq -r .path <<<"$out")
 
 # 2. A herdr workspace on it.
 pane=$(herdr worktree open --cwd "$(git rev-parse --show-toplevel)" --path "$path" \
-  --label <branch> --no-focus --json | jq -r .result.root_pane.pane_id)
+  --label <name> --no-focus --json | jq -r .result.root_pane.pane_id)
 
 # 3. Claude in that workspace.
 herdr agent start <name> --kind claude --pane "$pane" --timeout 90000
@@ -94,6 +108,11 @@ hooks:
 herdr workspace close <workspace-id>
 wt remove --foreground <branch>
 ```
+
+`<branch>` is whatever the worktree has checked out *now*
+(`git -C <path> branch --show-current`), which may not be the branch it
+started on. Any other branches the worker made stay behind. List them for the
+user; don't delete them.
 
 `wt remove` deletes the branch only if it's merged, and refuses a worktree
 with uncommitted changes. Never add `-D` or `--force`: report the refusal to
