@@ -84,20 +84,26 @@ fi
 echo "database $db created; test and development both resolve to it"
 """
 
-# Background, after the worktree is gone (output in .git/wt/logs/).
+# Drops the database recorded in the worktree's .env.test.local -- not one
+# recomputed from {{ branch }}, which is wrong once a worker has switched
+# branches (e.g. to open a PR). Runs before removal because the file goes with
+# the worktree; wt refuses a worktree with uncommitted changes before this
+# hook runs, so a refused removal never loses its database. Anything this
+# setup hook didn't write, or a name that isn't per-worktree, is skipped.
 # WITH (FORCE) ends leftover sessions -- a server or console still running in
-# the removed worktree's panes -- instead of leaving the database behind.
-[post-remove]
+# the worktree's panes -- instead of leaving the database behind.
+[pre-remove]
 drop-db = """
 set -eu
-[ -x '{{ primary_worktree_path }}/bin/rails' ] || exit 0
+f='{{ worktree_path }}/.env.test.local'
+grep -q '^# Written by the worktrunk pre-start hook' "$f" 2>/dev/null || exit 0
+db=$(sed -n 's#^DATABASE_URL=postgres://localhost/##p' "$f" | head -1)
 app=$(printf '%s' '{{ repo }}' | tr 'A-Z' 'a-z' | tr -c 'a-z0-9' '_')
-db=$(printf '%s' "${app}_test_{{ branch | sanitize_db }}" | cut -c1-63)
 # Never the shared databases: only per-worktree names get past this.
 case "$db" in
-  *[!a-z0-9_]*) echo "refusing to drop '$db'" >&2; exit 1 ;;
+  *[!a-z0-9_]*|'') echo "not dropping '$db': not a per-worktree database name"; exit 0 ;;
   "${app}"_test_?*) ;;
-  *) echo "refusing to drop '$db'" >&2; exit 1 ;;
+  *) echo "not dropping '$db': not a per-worktree database name"; exit 0 ;;
 esac
 psql -X -q -d postgres -c "DROP DATABASE IF EXISTS \\"$db\\" WITH (FORCE)"
 echo "dropped database $db"
