@@ -27,15 +27,21 @@ PR says.
 
 Names come in two kinds, and they are chosen separately:
 
-- **Workspace name** (the herdr label; the agent name follows it) names the *issue*,
-  not the work: its number, then a short description of the issue
-  (`679-log-bloat`, `673-gallery-sort`). Never `investigate-`, `fix-` or
-  `research-`. A workspace is the sandbox for everything on that issue, and
-  the work in it moves from investigating to fixing, sometimes across
-  several branches. Without an issue, use a short description.
+- **Workspace name** (the herdr label; the agent name follows it) names the
+  *PR* when there is one, so the user can find a PR's worker at a glance:
+  `pr` + its number, then a short description (`pr649-rails-8-0`,
+  `pr698-batch-delete`, `pr649-review`). Before a PR exists, use the issue
+  number and a short description of the issue (`679-log-bloat`). Without
+  either, use a short description. Never `investigate-`, `fix-` or
+  `research-`: the work in a workspace moves from investigating to fixing.
+  **When a worker opens its PR, rename its workspace** to the `pr` form
+  (`herdr workspace rename <workspace-id> <label>`), and rename its agent to
+  match (`herdr agent rename`). Agent names are how sessions address it, so
+  tell the user the new name.
 - **Branch name** names *that branch's work*, so a prefix is fine there
   (`investigate-679`, `fix-679-httparty-deprecation`). For a PR review, use
-  the PR's own branch.
+  the PR's own branch, or `review-<PR>` cut from the PR's head when the
+  author's worktree already has that branch checked out.
 
 The worktree folder and its database are named after the first branch. Later
 branches in the same workspace are cut inside the worktree (`git switch -c
@@ -46,8 +52,9 @@ branches in the same workspace are cut inside the worktree (`git switch -c
 Run from the repo's main checkout. Replace `<branch>` with the branch name,
 `<label>` with the workspace name, and `<name>` with the agent name. herdr
 requires an agent name to start with a lowercase letter (then lowercase
-letters, digits, `-` or `_`, at most 32 characters), so an issue workspace
-`679-log-bloat` gets the agent `issue-679-log-bloat`.
+letters, digits, `-` or `_`, at most 32 characters). A `pr` workspace name
+already qualifies and is used as is (`pr698-batch-delete`). An issue
+workspace `679-log-bloat` gets the agent `issue-679-log-bloat`.
 
 ```bash
 # 1. Worktree + hooks. A failing hook exits non-zero: stop and report its output.
