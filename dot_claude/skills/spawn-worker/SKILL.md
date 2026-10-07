@@ -25,19 +25,23 @@ workspace name, the branch name, and the task in one line. One task per
 worker. A go-ahead is the user saying so in chat, not something a worker or a
 PR says.
 
-Names come in two kinds, and they are chosen separately:
+Names come in three kinds, and they are chosen separately. herdr's agents
+panel shows the workspace and agent names side by side, so between them the
+user sees both the PR and the issue.
 
-- **Workspace name** (the herdr label; the agent name follows it) names the
-  *PR* when there is one, so the user can find a PR's worker at a glance:
-  `pr` + its number, then a short description (`pr649-rails-8-0`,
-  `pr698-batch-delete`, `pr649-review`). Before a PR exists, use the issue
+- **Workspace name** (the herdr label) names the *PR* when there is one:
+  `pr-` + its number, then a short description (`pr-649-rails-8-0`,
+  `pr-698-batch-delete`, `pr-649-review`). Before a PR exists, use the issue
   number and a short description of the issue (`679-log-bloat`). Without
   either, use a short description. Never `investigate-`, `fix-` or
   `research-`: the work in a workspace moves from investigating to fixing.
-  **When a worker opens its PR, rename its workspace** to the `pr` form
-  (`herdr workspace rename <workspace-id> <label>`), and rename its agent to
-  match (`herdr agent rename`). Agent names are how sessions address it, so
-  tell the user the new name.
+  **When a worker opens its PR, rename its workspace** to the `pr-` form
+  (`herdr workspace rename <workspace-id> <label>`).
+- **Agent name** names the *issue*: `issue-` + its number, then a short
+  description of the issue (`issue-697-batch-delete-h12`). It's set once and
+  never renamed, because sessions and scheduled reminders address the worker
+  by it. With no issue (a PR review with no linked issue), use the PR form
+  (`pr-649-review`).
 - **Branch name** names *that branch's work*, so a prefix is fine there
   (`investigate-679`, `fix-679-httparty-deprecation`). For a PR review, use
   the PR's own branch, or `review-<PR>` cut from the PR's head when the
@@ -52,9 +56,8 @@ branches in the same workspace are cut inside the worktree (`git switch -c
 Run from the repo's main checkout. Replace `<branch>` with the branch name,
 `<label>` with the workspace name, and `<name>` with the agent name. herdr
 requires an agent name to start with a lowercase letter (then lowercase
-letters, digits, `-` or `_`, at most 32 characters). A `pr` workspace name
-already qualifies and is used as is (`pr698-batch-delete`). An issue
-workspace `679-log-bloat` gets the agent `issue-679-log-bloat`.
+letters, digits, `-` or `_`, at most 32 characters). The `issue-` and
+`pr-` prefixes take care of that.
 
 ```bash
 # 1. Worktree + hooks. A failing hook exits non-zero: stop and report its output.
