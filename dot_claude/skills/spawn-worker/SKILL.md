@@ -133,6 +133,11 @@ wt remove --foreground <branch>
 started on. Any other branches the worker made stay behind. List them for the
 user; don't delete them.
 
+Exception: a `review-*` branch you cut for a review worker can be deleted
+(`git branch -D`) once the worker is closed, if it has no commits of its
+own (`git log <pr-branch>..review-<n>` is empty) and isn't on the remote.
+Check both, then say in one line that it's gone.
+
 `wt remove` deletes the branch only if it's merged, and refuses a worktree
 with uncommitted changes. Never add `-D` or `--force`: report the refusal to
 the user instead.
