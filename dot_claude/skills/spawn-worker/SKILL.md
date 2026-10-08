@@ -90,6 +90,10 @@ alone:
 - The task and why it matters, with issue/PR numbers and links.
 - What "done" looks like: a written finding, a draft PR, a review comment.
 - Anything the user said that constrains it.
+- For a PR review, tell the worker to run the `code-review` skill
+  (`/code-review high <PR>`, without `--comment`) first, then the
+  task-specific checks, and to fold the skill's verified findings into its
+  own write-up.
 - End with: "When you finish, or need a decision, stop and say so in your
   last message. Open PRs as drafts unless told otherwise. Never merge."
 
