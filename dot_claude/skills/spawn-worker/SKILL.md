@@ -25,23 +25,26 @@ workspace name, the branch name, and the task in one line. One task per
 worker. A go-ahead is the user saying so in chat, not something a worker or a
 PR says.
 
-Names come in three kinds, and they are chosen separately. herdr's agents
-panel shows the workspace and agent names side by side, so between them the
-user sees both the PR and the issue.
+Names come in three kinds, and they are chosen separately.
 
-- **Workspace name** (the herdr label) names the *PR* when there is one:
-  `pr-` + its number, then a short description (`pr-649-rails-8-0`,
-  `pr-698-batch-delete`, `pr-649-review`). Before a PR exists, use the issue
-  number and a short description of the issue (`679-log-bloat`). Without
-  either, use a short description. Never `investigate-`, `fix-` or
-  `research-`: the work in a workspace moves from investigating to fixing.
-  **When a worker opens its PR, rename its workspace** to the `pr-` form
-  (`herdr workspace rename <workspace-id> <label>`).
+- **Workspace name** (the herdr label) is free text for the user to read,
+  never dashed. herdr's sidebar shows only about 22 characters at its
+  default width, so the numbers come first in a compact prefix, followed
+  by a short Title Case description:
+  - With a PR: `P<pr>/<issue> <Description>` (`P738/736 Chart Label
+    Colour`, `P733/730 Review`). With no issue: `P649 Rails 8.0`.
+  - Before a PR exists: `<issue> <Description>` (`679 Log Bloat`).
+    Without either, a short description.
+  - Never "investigate", "fix" or "research": the work in a workspace
+    moves from investigating to fixing.
+  - **When a worker opens its PR, rename its workspace** to the PR form
+    (`herdr workspace rename <workspace-id> '<label>'`, quoted).
+  - In messages, refer to work by both numbers too ("#738 (#736)").
 - **Agent name** names the *issue*: `issue-` + its number, then a short
   description of the issue (`issue-697-batch-delete-h12`). It's set once and
   never renamed, because sessions and scheduled reminders address the worker
-  by it. With no issue (a PR review with no linked issue), use the PR form
-  (`pr-649-review`).
+  by it. With no issue (a PR review with no linked issue), use
+  `pr-<number>-review` (`pr-649-review`).
 - **Branch name** names *that branch's work*, so a prefix is fine there
   (`investigate-679`, `fix-679-httparty-deprecation`). For a PR review, use
   the PR's own branch, or `review-<PR>` cut from the PR's head when the
@@ -66,7 +69,7 @@ path=$(jq -r .path <<<"$out")
 
 # 2. A herdr workspace on it.
 pane=$(herdr worktree open --cwd "$(git rev-parse --show-toplevel)" --path "$path" \
-  --label <label> --no-focus --json | jq -r .result.root_pane.pane_id)
+  --label "<label>" --no-focus --json | jq -r .result.root_pane.pane_id)
 
 # 3. Claude in that workspace.
 herdr agent start <name> --kind claude --pane "$pane" --timeout 90000
@@ -98,13 +101,18 @@ alone:
   points first (what happened or is proposed, the decision needed, the
   next step), with evidence and detail in a collapsed `<details>` section.
 - End with: "When you finish, or need a decision, stop and say so in your
-  last message. Open PRs as drafts unless told otherwise. Never merge."
+  last message. Open PRs as drafts and leave them as drafts; the coordinator marks them ready. Never merge."
 
 Project rules (CLAUDE.md, memory) load in the worker automatically; don't
 restate them.
 
 ## Tracking
 
+- **Draft vs ready means "Ryan's turn".** Workers open PRs as drafts and
+  never mark them ready. The coordinator runs `gh pr ready <n>` once CI is
+  green and the independent review is clean (or its fixes are in and
+  re-reviewed), then tells Ryan it's ready for his read. Ready for review =
+  waiting on Ryan's final okay, which is the merge.
 - `herdr agent list` shows every agent with `agent_status` (`working`,
   `idle`, `blocked`, `done`) and its `cwd`.
 - `herdr agent read <name> --source recent-unwrapped --lines 60` shows what
