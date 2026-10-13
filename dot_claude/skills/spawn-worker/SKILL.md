@@ -103,6 +103,11 @@ alone:
 - Tell it to keep issues, PR descriptions and comments short: a few key
   points first (what happened or is proposed, the decision needed, the
   next step), with evidence and detail in a collapsed `<details>` section.
+- When the work needs screenshots, tell it to save them as files and list
+  their paths in its last message, never to push them to a branch or link
+  them from a commit. The user pastes them into the PR or issue, where
+  GitHub hosts them permanently. Pushed image branches get deleted and the
+  links eventually break.
 - End with: "When you finish, or need a decision, stop and say so in your
   last message. Open PRs as drafts and leave them as drafts; the coordinator marks them ready. Never merge."
 
