@@ -29,17 +29,20 @@ Names come in three kinds, and they are chosen separately.
 
 - **Workspace name** (the herdr label) is free text for the user to read,
   never dashed. herdr's sidebar shows only about 22 characters at its
-  default width, so the numbers come first in a compact prefix, followed
-  by a short Title Case description:
-  - With a PR: `P<pr>/<issue> <Description>` (`P738/736 Chart Label
-    Colour`, `P733/730 Review`). With no issue: `P649 Rails 8.0`.
-  - Before a PR exists: `<issue> <Description>` (`679 Log Bloat`).
+  default width, so the numbers come first, followed by a short Title Case
+  description. The issue number always leads, so a label only grows:
+  - Before a PR exists: `<issue> <Description>` (`736 Chart Label Colour`).
+  - Once the PR is open: `<issue>→<pr> <Description>`, keeping the same
+    description (`736→738 Chart Label Colour`). A review worker gets
+    `<issue>→<pr> Review` (`736→738 Review`).
+  - A PR with no issue: `→<pr> <Description>` (`→649 Rails 8.0`).
     Without either, a short description.
+  - Use the Unicode arrow `→`, not `>`.
   - Never "investigate", "fix" or "research": the work in a workspace
     moves from investigating to fixing.
   - **When a worker opens its PR, rename its workspace** to the PR form
     (`herdr workspace rename <workspace-id> '<label>'`, quoted).
-  - In messages, refer to work by both numbers too ("#738 (#736)").
+  - In messages, refer to work by both numbers too ("#737 (#731)").
 - **Agent name** names the *issue*: `issue-` + its number, then a short
   description of the issue (`issue-697-batch-delete-h12`). It's set once and
   never renamed, because sessions and scheduled reminders address the worker
