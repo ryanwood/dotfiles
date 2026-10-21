@@ -21,9 +21,26 @@ development database.
 ## Before starting
 
 Propose the workers and wait for the user's go-ahead: for each, the
-workspace name, the branch name, and the task in one line. One task per
-worker. A go-ahead is the user saying so in chat, not something a worker or a
-PR says.
+workspace name, the branch name, the model with a few words on why, and the
+task in one line. One task per worker. A go-ahead is the user saying so in
+chat, not something a worker or a PR says.
+
+## Model
+
+Pick the model by how much the task rests on the worker's own judgment.
+Workers share the user's plan usage, so routine work on Sonnet leaves room
+for the work that needs Opus.
+
+- **Opus:** PR reviews and re-reviews, investigations and audits, and
+  anything that reads production data or query plans. These are where a
+  subtle miss costs the most, and where knowing which claim to verify is the
+  job.
+- **Sonnet:** well-specified implementation, where the brief already makes
+  the hard decisions and a review follows (a gem bump with a checklist, review
+  fixes), and mechanical work (rebases, description updates, data pulls).
+
+When unsure, propose Opus and say why. Never switch a running worker's model:
+restarting it loses its context.
 
 Names come in three kinds, and they are chosen separately.
 
@@ -74,8 +91,8 @@ path=$(jq -r .path <<<"$out")
 pane=$(herdr worktree open --cwd "$(git rev-parse --show-toplevel)" --path "$path" \
   --label "<label>" --no-focus --json | jq -r .result.root_pane.pane_id)
 
-# 3. Claude in that workspace.
-herdr agent start <name> --kind claude --pane "$pane" --timeout 90000
+# 3. Claude in that workspace, on the proposed model (sonnet or opus).
+herdr agent start <name> --kind claude --pane "$pane" --timeout 90000 -- --model <model>
 
 # 4. The brief (see below). No --wait: the worker runs on its own.
 herdr agent prompt <name> "$brief"
@@ -102,14 +119,19 @@ alone:
   own write-up.
 - Tell it to keep issues, PR descriptions and comments short: a few key
   points first (what happened or is proposed, the decision needed, the
-  next step), with evidence and detail in a collapsed `<details>` section.
+  next step), then the substance a reader needs to decide (options,
+  comparison, recommendation) visible. Only evidence worth a second look
+  (query output, logs, raw figures) goes in a collapsed `<details>` section.
 - When the work needs screenshots, tell it to save them as files and list
   their paths in its last message, never to push them to a branch or link
   them from a commit. The user pastes them into the PR or issue, where
   GitHub hosts them permanently. Pushed image branches get deleted and the
   links eventually break.
 - End with: "When you finish, or need a decision, stop and say so in your
-  last message. Open PRs as drafts and leave them as drafts; the coordinator marks them ready. Never merge."
+  last message. Open PRs as drafts and leave them as drafts; the coordinator marks them ready. Never merge.
+  If you start a dev server or any other background process, stop it before
+  your last message unless the user is using it, and name any that are still
+  running."
 
 Project rules (CLAUDE.md, memory) load in the worker automatically; don't
 restate them.
@@ -121,6 +143,11 @@ restate them.
   green and the independent review is clean (or its fixes are in and
   re-reviewed), then tells Ryan it's ready for his read. Ready for review =
   waiting on Ryan's final okay, which is the merge.
+- Workers don't notify you when they finish. While any worker is running,
+  keep a Monitor on `herdr agent list` that emits each status change (and new
+  comments on the PRs in flight), and re-arm it when it expires. Never tell
+  the user you'll report something without a watch like this running. When
+  it fires, tell the user in one line first, then read the worker.
 - `herdr agent list` shows every agent with `agent_status` (`working`,
   `idle`, `blocked`, `done`) and its `cwd`.
 - `herdr agent read <name> --source recent-unwrapped --lines 60` shows what

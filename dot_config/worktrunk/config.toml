@@ -7,18 +7,34 @@
 # herdr and worktrunk are local orchestration. Replaces ~/.local/bin/agent-wt.
 #
 # Rails apps (bin/rails, with pg and dotenv in Gemfile.lock) get their own
-# Postgres database per worktree, <repo>_test_<branch>, so an agent there can
-# never reach the shared development or test database. DATABASE_URL goes in
-# .env.test.local and .env.development.local, which dotenv loads
-# automatically (gitignored by `.env.*`), so Rails config stays stock. Other
-# repos get no database. A Rails app without pg and dotenv is refused, since
-# skipping the database would leave the agent on the shared one;
+# Postgres databases per worktree, <repo>_dev_<branch> and <repo>_test_<branch>,
+# so an agent there can never reach the shared development or test database,
+# and seeding development never touches test. DATABASE_URL goes in
+# .env.development.local and .env.test.local, which dotenv loads automatically
+# (gitignored by `.env.*`), so Rails config stays stock. Only the test database
+# is built here; the development one, and the JavaScript dependencies, wait for
+# bin/setup in the worktrees that actually run the app. Other repos get no
+# database. A Rails app without pg and dotenv is refused, since skipping the
+# database would leave the agent on the shared one;
 # `wt switch --create <branch> --no-hooks` bypasses that deliberately.
+#
+# So that several worktrees can run bin/dev at once, a Rails app also gets:
+# - its own Redis database number, as REDIS_URL in .env.development.local, when
+#   the repo's .env sets REDIS_URL. 0 and 1 are reserved (the main checkout
+#   uses .env's); a number is free when no other worktree has it, so Sidekiq
+#   never picks up a running checkout's jobs. `wt remove` empties it.
+# - its own web port, 3001-3099 (the main checkout keeps bin/dev's default),
+#   when it has a Procfile.dev. It goes in .foreman, foreman's own per-directory
+#   defaults file, whose `port` beats the PORT that bin/dev exports. Skipped
+#   when the repo doesn't gitignore .foreman, since an untracked file would
+#   make `wt remove` refuse the worktree.
+# Both are picked by reading the other worktrees' files, so a removed
+# worktree's number and port are free again once its files are gone.
 
 # Blocking: a failure here stops `wt switch --create`, and the herdr plugin
 # then opens no workspace, so no agent starts in a half-set-up worktree.
 [pre-start]
-setup = """
+setup = '''
 set -eu
 cd '{{ worktree_path }}'
 
@@ -70,48 +86,151 @@ if ! grep -qE '^    pg ' Gemfile.lock || ! grep -qE '^    dotenv(-rails)? ' Gemf
 fi
 
 app=$(printf '%s' '{{ repo }}' | tr 'A-Z' 'a-z' | tr -c 'a-z0-9' '_')
-db=$(printf '%s' "${app}_test_{{ branch | sanitize_db }}" | cut -c1-63)
-url="postgres://localhost/$db"
+test_db=$(printf '%s' "${app}_test_{{ branch | sanitize_db }}" | cut -c1-63)
+dev_db=$(printf '%s' "${app}_dev_{{ branch | sanitize_db }}" | cut -c1-63)
 
-for env in test development; do
-  printf '# Written by the worktrunk pre-start hook (~/.config/worktrunk/config.toml):\\n# this worktree'"'"'s own database. `wt remove` drops it.\\nDATABASE_URL=%s\\n' "$url" > ".env.$env.local"
+# Prints the named file from every worktree of this repo that has one.
+in_worktrees() {
+  git worktree list --porcelain | sed -n 's/^worktree //p' | while IFS= read -r w; do
+    cat "$w/$1" 2>/dev/null || true
+  done
+}
+
+# The pickers read the other worktrees' files, so two worktrees created at
+# once could pick the same Redis number or port. mkdir is atomic everywhere,
+# so a directory in the shared git dir serialises them, held until both files
+# are written. The traps release it if anything in between fails.
+lock="$(git rev-parse --path-format=absolute --git-common-dir)/worktrunk-pick.lock"
+waited=0
+until mkdir "$lock" 2>/dev/null; do
+  waited=$((waited + 1))
+  if [ "$waited" -ge 30 ]; then
+    echo "couldn't get $lock within 30 s: another worktree is being created, or a creation was killed; if no wt switch is running, rmdir it and retry" >&2
+    exit 1
+  fi
+  sleep 1
 done
+trap 'rmdir "$lock" 2>/dev/null || true' EXIT
+trap 'exit 1' HUP INT TERM
+
+redis_url=
+if grep -q '^REDIS_URL=' .env 2>/dev/null; then
+  redis_base=$(sed -n 's/^REDIS_URL=//p' .env | head -1 | tr -d "'\"" | sed 's#/[0-9]*$##')
+  used=$(in_worktrees .env.development.local | sed -n 's#^REDIS_URL=.*/\([0-9][0-9]*\)$#\1#p')
+  # Redis has 16 databases by default.
+  n=2
+  while [ "$n" -le 15 ]; do
+    printf '%s\n' "$used" | grep -qx "$n" || break
+    n=$((n + 1))
+  done
+  if [ "$n" -gt 15 ]; then
+    echo "no free Redis database: 2-15 are all held by other worktrees" >&2
+    exit 1
+  fi
+  redis_url="$redis_base/$n"
+fi
+
+port=
+if [ -f Procfile.dev ]; then
+  if git check-ignore -q .foreman; then
+    used=$(in_worktrees .foreman | sed -n 's/^port: *//p')
+    p=3001
+    while [ "$p" -le 3099 ]; do
+      printf '%s\n' "$used" | grep -qx "$p" || nc -z 127.0.0.1 "$p" 2>/dev/null || break
+      p=$((p + 1))
+    done
+    if [ "$p" -gt 3099 ]; then
+      echo "no free port: 3001-3099 are all held by other worktrees or listening" >&2
+      exit 1
+    fi
+    port=$p
+    printf '# Written by the worktrunk pre-start hook (~/.config/worktrunk/config.toml):\n# this worktree'"'"'s own bin/dev port.\nport: %s\n' "$port" > .foreman
+  else
+    echo ".foreman isn't gitignored here: no port of its own, bin/dev uses its default"
+  fi
+fi
+
+header() {
+  printf '# Written by the worktrunk pre-start hook (~/.config/worktrunk/config.toml):\n# this worktree'"'"'s own database. `wt remove` drops it.\n'
+}
+{ header; printf 'DATABASE_URL=postgres://localhost/%s\n' "$test_db"; } > .env.test.local
+{
+  header
+  printf 'DATABASE_URL=postgres://localhost/%s\n' "$dev_db"
+  [ -z "$redis_url" ] || printf 'REDIS_URL=%s\n' "$redis_url"
+} > .env.development.local
+rmdir "$lock"
+trap - EXIT HUP INT TERM
 
 # Explicit DATABASE_URL: creating and loading can only touch the new database.
-DATABASE_URL="$url" RAILS_ENV=test bin/rails db:create db:schema:load >/dev/null
+# The development one is left to bin/setup, run only in worktrees that drive
+# the app.
+DATABASE_URL="postgres://localhost/$test_db" RAILS_ENV=test bin/rails db:create db:schema:load >/dev/null
 
-# Then prove the dotenv files alone route both environments to it.
-# env -u: an inherited DATABASE_URL would beat the dotenv files.
-test_db=$(env -u DATABASE_URL RAILS_ENV=test bin/rails runner 'print ActiveRecord::Base.connection_db_config.database')
-dev_db=$(env -u DATABASE_URL RAILS_ENV=development bin/rails runner 'print ActiveRecord::Base.connection_db_config.database')
-if [ "$test_db" != "$db" ] || [ "$dev_db" != "$db" ]; then
-  echo "worktree resolves to test=$test_db dev=$dev_db, expected $db" >&2
+# Then prove the dotenv files alone route each environment to its own.
+# env -u: inherited values would beat the dotenv files.
+seen_test=$(env -u DATABASE_URL -u REDIS_URL RAILS_ENV=test bin/rails runner 'print ActiveRecord::Base.connection_db_config.database')
+seen_dev=$(env -u DATABASE_URL -u REDIS_URL RAILS_ENV=development bin/rails runner 'print ActiveRecord::Base.connection_db_config.database, " ", ENV["REDIS_URL"]')
+if [ "$seen_test" != "$test_db" ] || [ "${seen_dev%% *}" != "$dev_db" ]; then
+  echo "worktree resolves to test=$seen_test dev=${seen_dev%% *}, expected test=$test_db dev=$dev_db" >&2
   exit 1
 fi
-echo "database $db created; test and development both resolve to it"
-"""
+if [ -n "$redis_url" ] && [ "${seen_dev#* }" != "$redis_url" ]; then
+  echo "development resolves to REDIS_URL=${seen_dev#* }, expected $redis_url" >&2
+  exit 1
+fi
+echo "database $test_db created; test resolves to it, development to $dev_db (bin/setup creates it)"
+[ -z "$redis_url" ] || echo "Redis: $redis_url"
+[ -z "$port" ] || echo "bin/dev port: $port"
+'''
 
-# Drops the database recorded in the worktree's .env.test.local -- not one
-# recomputed from {{ branch }}, which is wrong once a worker has switched
-# branches (e.g. to open a PR). Runs before removal because the file goes with
-# the worktree; wt refuses a worktree with uncommitted changes before this
-# hook runs, so a refused removal never loses its database. Anything this
-# setup hook didn't write, or a name that isn't per-worktree, is skipped.
-# WITH (FORCE) ends leftover sessions -- a server or console still running in
-# the worktree's panes -- instead of leaving the database behind.
+# Drops the databases recorded in the worktree's .env.test.local and
+# .env.development.local -- not ones recomputed from {{ branch }}, which are
+# wrong once a worker has switched branches (e.g. to open a PR). Runs before
+# removal because the files go with the worktree; wt refuses a worktree with
+# uncommitted changes before this hook runs, so a refused removal never loses
+# its databases. Anything this setup hook didn't write, or a name that isn't
+# per-worktree, is skipped. Older worktrees have both files naming one test
+# database; it's dropped once. WITH (FORCE) ends leftover sessions -- a server
+# or console still running in the worktree's panes -- instead of leaving the
+# database behind. A database bin/setup never created is simply not there.
 [pre-remove]
-drop-db = """
+drop-db = '''
 set -eu
-f='{{ worktree_path }}/.env.test.local'
-grep -q '^# Written by the worktrunk pre-start hook' "$f" 2>/dev/null || exit 0
-db=$(sed -n 's#^DATABASE_URL=postgres://localhost/##p' "$f" | head -1)
 app=$(printf '%s' '{{ repo }}' | tr 'A-Z' 'a-z' | tr -c 'a-z0-9' '_')
-# Never the shared databases: only per-worktree names get past this.
-case "$db" in
-  *[!a-z0-9_]*|'') echo "not dropping '$db': not a per-worktree database name"; exit 0 ;;
-  "${app}"_test_?*) ;;
-  *) echo "not dropping '$db': not a per-worktree database name"; exit 0 ;;
+dropped=
+for f in '{{ worktree_path }}/.env.test.local' '{{ worktree_path }}/.env.development.local'; do
+  grep -q '^# Written by the worktrunk pre-start hook' "$f" 2>/dev/null || continue
+  db=$(sed -n 's#^DATABASE_URL=postgres://localhost/##p' "$f" | head -1)
+  # Never the shared databases: only per-worktree names get past this.
+  case "$db" in
+    *[!a-z0-9_]*|'') echo "not dropping '$db': not a per-worktree database name"; continue ;;
+    "${app}"_test_?*|"${app}"_dev_?*) ;;
+    *) echo "not dropping '$db': not a per-worktree database name"; continue ;;
+  esac
+  [ "$db" != "$dropped" ] || continue
+  psql -X -q -d postgres -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE)"
+  echo "dropped database $db"
+  dropped=$db
+done
+
+# Empties the Redis database recorded in .env.development.local, so the next
+# worktree given that number starts with no leftover jobs. Only a number this
+# setup hook could have written: never 0, nor 1 or whatever .env uses.
+f='{{ worktree_path }}/.env.development.local'
+grep -q '^# Written by the worktrunk pre-start hook' "$f" 2>/dev/null || exit 0
+redis_url=$(sed -n 's/^REDIS_URL=//p' "$f" | head -1)
+[ -n "$redis_url" ] || exit 0
+n=${redis_url##*/}
+shared=$(sed -n 's/^REDIS_URL=//p' '{{ worktree_path }}/.env' 2>/dev/null | head -1 | tr -d "'\"")
+case "$n" in
+  [2-9]|1[0-5]) ;;
+  *) echo "not flushing '$redis_url': not a per-worktree Redis database"; exit 0 ;;
 esac
-psql -X -q -d postgres -c "DROP DATABASE IF EXISTS \\"$db\\" WITH (FORCE)"
-echo "dropped database $db"
-"""
+if [ "${shared##*/}" = "$n" ]; then
+  echo "not flushing '$redis_url': it's the one .env uses"
+  exit 0
+fi
+redis-cli -u "$redis_url" flushdb >/dev/null
+echo "flushed Redis database $redis_url"
+'''
