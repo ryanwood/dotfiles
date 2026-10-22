@@ -85,6 +85,15 @@ if ! grep -qE '^    pg ' Gemfile.lock || ! grep -qE '^    dotenv(-rails)? ' Gemf
   exit 1
 fi
 
+# Install this branch's own gems and JavaScript packages before anything boots
+# Rails: a lockfile that has moved ahead of what's installed fails the
+# db:create below. Same steps as bin/setup, minus its dev-database prepare;
+# --prefer-offline serves packages from yarn's cache, so this takes seconds.
+bundle check >/dev/null || bundle install --quiet
+if [ -f yarn.lock ]; then
+  yarn install --frozen-lockfile --prefer-offline --silent
+fi
+
 app=$(printf '%s' '{{ repo }}' | tr 'A-Z' 'a-z' | tr -c 'a-z0-9' '_')
 test_db=$(printf '%s' "${app}_test_{{ branch | sanitize_db }}" | cut -c1-63)
 dev_db=$(printf '%s' "${app}_dev_{{ branch | sanitize_db }}" | cut -c1-63)
