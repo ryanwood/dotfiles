@@ -21,8 +21,8 @@ development database.
 ## Before starting
 
 Propose the workers and wait for the user's go-ahead: for each, the
-workspace name, the branch name, the model with a few words on why, and the
-task in one line. One task per worker. A go-ahead is the user saying so in
+workspace name, the branch name, the model and effort level with a few words
+on why, and the task in one line. One task per worker. A go-ahead is the user saying so in
 chat, not something a worker or a PR says.
 
 ## Model
@@ -42,6 +42,12 @@ for the work that needs Opus.
 When unsure, propose Opus and say why. Never switch a running worker's model:
 restarting it loses its context.
 
+Name the effort level alongside the model:
+
+- **Sonnet medium:** mechanical and well-specified work.
+- **Opus high:** reviews, investigations and foundational slices.
+- **xhigh:** only when proposed explicitly, with the reason.
+
 Names come in three kinds, and they are chosen separately.
 
 - **Workspace name** (the herdr label) is free text for the user to read,
@@ -50,21 +56,26 @@ Names come in three kinds, and they are chosen separately.
   description. The issue number always leads, so a label only grows:
   - Before a PR exists: `<issue> <Description>` (`736 Chart Label Colour`).
   - Once the PR is open: `<issue>→<pr> <Description>`, keeping the same
-    description (`736→738 Chart Label Colour`). A review worker gets
-    `<issue>→<pr> Review` (`736→738 Review`).
+    description (`736→738 Chart Label Colour`). A review worker joins the
+    author's workspace (see "Start a reviewer") and has no label of its own.
+    Only a PR with no author worker gets a separate `<issue>→<pr> Review`
+    workspace (`736→738 Review`).
   - A PR with no issue: `→<pr> <Description>` (`→649 Rails 8.0`).
     Without either, a short description.
   - Use the Unicode arrow `→`, not `>`.
   - Never "investigate", "fix" or "research": the work in a workspace
     moves from investigating to fixing.
-  - **When a worker opens its PR, rename its workspace** to the PR form
-    (`herdr workspace rename <workspace-id> '<label>'`, quoted).
+  - The workspace's tab carries the same label, so the tab bar says which
+    work it is instead of `1`.
+  - **When a worker opens its PR, rename its workspace and its tab** to the
+    PR form (`herdr workspace rename <workspace-id> '<label>'` and
+    `herdr tab rename <tab-id> '<label>'`, quoted).
   - In messages, refer to work by both numbers too ("#737 (#731)").
 - **Agent name** names the *issue*: `issue-` + its number, then a short
   description of the issue (`issue-697-batch-delete-h12`). It's set once and
   never renamed, because sessions and scheduled reminders address the worker
-  by it. With no issue (a PR review with no linked issue), use
-  `pr-<number>-review` (`pr-649-review`).
+  by it. A review worker is always `pr-<number>-review` (`pr-649-review`),
+  issue or not, so it never reads like its PR's author.
 - **Branch name** names *that branch's work*, so a prefix is fine there
   (`investigate-679`, `fix-679-httparty-deprecation`). For a PR review, use
   the PR's own branch, or `review-<PR>` cut from the PR's head when the
@@ -90,9 +101,11 @@ path=$(jq -r .path <<<"$out")
 # 2. A herdr workspace on it.
 pane=$(herdr worktree open --cwd "$(git rev-parse --show-toplevel)" --path "$path" \
   --label "<label>" --no-focus --json | jq -r .result.root_pane.pane_id)
+tab=$(herdr pane get "$pane" | jq -r .result.pane.tab_id)
+herdr tab rename "$tab" '<label>'
 
-# 3. Claude in that workspace, on the proposed model (sonnet or opus).
-herdr agent start <name> --kind claude --pane "$pane" --timeout 90000 -- --model <model>
+# 3. Claude in that workspace, on the proposed model and effort level.
+herdr agent start <name> --kind claude --pane "$pane" --timeout 90000 -- --model <model> --effort <effort>
 
 # 4. The brief (see below). No --wait: the worker runs on its own.
 herdr agent prompt <name> "$brief"
@@ -104,6 +117,42 @@ check out a PR's branch. Brand-new branches start from the remote's default
 branch; existing ones stay where they are.
 
 Tell the user which workers started, with their workspace labels.
+
+## Start a reviewer
+
+A review worker opens as a split to the right inside its PR author's
+workspace, so one sidebar entry holds both. It still gets its own worktree
+and `review-<PR>` branch from `wt switch`: the author has the PR branch
+checked out, the reviewer must see the PR as pushed rather than the author's
+uncommitted edits, and the hooks give it its own database and deny rules.
+
+```bash
+# 1. Worktree + hooks, on a review branch cut from the PR's pushed head.
+#    Fetch first: wt doesn't, and the local PR branch may hold unpushed commits.
+git fetch -q origin
+out=$(wt switch --create review-<PR> --base origin/<pr-branch> --no-cd --format=json) || exit 1
+path=$(jq -r .path <<<"$out")
+
+# 2. Split the author's pane and label both halves.
+author=$(herdr agent list | jq -r '.result.agents[] | select(.name=="<author-name>") | .pane_id')
+pane=$(herdr pane split "$author" --direction right --cwd "$path" --no-focus | jq -r .result.pane.pane_id)
+herdr pane rename "$author" 'Build'
+herdr pane rename "$pane" 'Review'
+
+# 3 and 4 as for any worker, with the agent name pr-<PR>-review.
+herdr agent start pr-<PR>-review --kind claude --pane "$pane" --timeout 90000 -- --model opus --effort high
+herdr agent prompt pr-<PR>-review "$brief"
+```
+
+The workspace and tab keep the author's label. If the PR has no author
+worker (one of the user's own PRs), start the reviewer like any worker, in its own
+`<issue>→<pr> Review` workspace.
+
+**A reviewer already running in its own workspace** moves without a restart:
+`herdr pane move <review-pane> --target-pane <author-pane> --split right --no-focus`,
+then label both panes as above and `herdr workspace close` the emptied
+workspace. The moved pane gets a new id; keep addressing it by agent name.
+Move one only on the user's yes: it changes their layout.
 
 ## The brief
 
@@ -138,11 +187,11 @@ restate them.
 
 ## Tracking
 
-- **Draft vs ready means "Ryan's turn".** Workers open PRs as drafts and
+- **Draft vs ready means "the user's turn".** Workers open PRs as drafts and
   never mark them ready. The coordinator runs `gh pr ready <n>` once CI is
   green and the independent review is clean (or its fixes are in and
-  re-reviewed), then tells Ryan it's ready for his read. Ready for review =
-  waiting on Ryan's final okay, which is the merge.
+  re-reviewed), then tells the user it's ready for their read. Ready for
+  review = waiting on the user's final okay, which is the merge.
 - Workers don't notify you when they finish. While any worker is running,
   keep a Monitor on `herdr agent list` that emits each status change (and new
   comments on the PRs in flight), and re-arm it when it expires. Never tell
@@ -175,6 +224,15 @@ wt remove --foreground <branch>
 (`git -C <path> branch --show-current`), which may not be the branch it
 started on. Any other branches the worker made stay behind. List them for the
 user; don't delete them.
+
+A reviewer shares its author's workspace, so:
+
+- **Closing only the review** (the PR is still open): `herdr pane close
+  <review-pane>`, then `wt remove --foreground review-<PR>`. The author's
+  workspace stays.
+- **Closing the author's workspace** (its PR merged) ends the reviewer too.
+  Remove both worktrees in the same step: the author's branch, then
+  `review-<PR>`.
 
 Exception: a `review-*` branch you cut for a review worker can be deleted
 (`git branch -D`) once the worker is closed, if it has no commits of its
