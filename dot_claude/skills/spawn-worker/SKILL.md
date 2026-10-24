@@ -149,9 +149,10 @@ worker (one of the user's own PRs), start the reviewer like any worker, in its o
 `<issue>→<pr> Review` workspace.
 
 **A reviewer already running in its own workspace** moves without a restart:
-`herdr pane move <review-pane> --target-pane <author-pane> --split right --no-focus`,
-then label both panes as above and `herdr workspace close` the emptied
-workspace. The moved pane gets a new id; keep addressing it by agent name.
+`herdr pane move <review-pane> --tab <author-tab> --split right --target-pane <author-pane> --no-focus`,
+then label both panes and the tab as above. herdr closes the emptied
+workspace itself. The moved pane gets a new id; keep addressing it by agent
+name.
 Move one only on the user's yes: it changes their layout.
 
 ## The brief
