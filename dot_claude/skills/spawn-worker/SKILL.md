@@ -193,11 +193,20 @@ restate them.
   green and the independent review is clean (or its fixes are in and
   re-reviewed), then tells the user it's ready for their read. Ready for
   review = waiting on the user's final okay, which is the merge.
-- Workers don't notify you when they finish. While any worker is running,
-  keep a Monitor on `herdr agent list` that emits each status change (and new
-  comments on the PRs in flight), and re-arm it when it expires. Never tell
-  the user you'll report something without a watch like this running. When
-  it fires, tell the user in one line first, then read the worker.
+- Workers don't notify you when they finish. While a worker has something
+  in flight, run `watch-workers.sh <scratchpad>` (next to this file) under
+  a Monitor. List the PRs in flight in `<scratchpad>/watch.prs`, one number
+  per line. Keep it quiet:
+  - Never restart it. Change what it watches by editing `watch.prs`. It
+    keeps its state in the scratchpad, so a re-arm neither repeats nor
+    misses an event.
+  - When it expires, re-arm it without a word in chat, and stop re-arming
+    once every worker is waiting on the user.
+  - When it fires, tell the user in one line first, then read the worker.
+
+  For any other watch (a deploy, a one-off check), suggest it in one line
+  and start it only on the user's yes. Never tell the user you'll report
+  something unless a watch is running.
 - `herdr agent list` shows every agent with `agent_status` (`working`,
   `idle`, `blocked`, `done`) and its `cwd`.
 - `herdr agent read <name> --source recent-unwrapped --lines 60` shows what
