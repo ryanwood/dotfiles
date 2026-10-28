@@ -172,10 +172,10 @@ alone:
   next step), then the substance a reader needs to decide (options,
   comparison, recommendation) visible. Only evidence worth a second look
   (query output, logs, raw figures) goes in a collapsed `<details>` section.
-- When the work needs screenshots, tell it to attach them to a PR or issue
-  comment with `gh pr comment <n> --attach '<file>#<alt>'` (or
-  `gh issue comment`), referencing each as `![alt](./<file>)` in the body
-  so it lands inline. GitHub hosts attachments permanently, as it does a
+- When the work needs screenshots, tell it to attach them with `--attach
+  '<file>#<alt>'`: on `gh pr edit` for a PR's description (where QA
+  screenshots go), or on `gh pr comment` / `gh issue comment`, referencing
+  each as `![alt](./<file>)` in the body so it lands inline. GitHub hosts attachments permanently, as it does a
   paste. Never push images to a branch or link them from a commit: pushed
   image branches get deleted and the links eventually break. Attachment
   URLs are viewable by anyone who has them, even on a private repo, so
@@ -219,10 +219,15 @@ tells the user when it does.
      after (your branch), each at desktop and phone width, side by side on
      one HTML page, and capture it at deviceScaleFactor 2. Return to your
      branch with a clean `git status` afterwards.
-   - Post one PR comment with the images attached (see "The brief"):
-     a title "Browser QA of <head SHA>", a verdict line, a numbered list of
-     anything that looked or behaved wrong, each one line, and for each
-     QA task, whether you checked it or couldn't.
+   - Put the images in the PR description, where a QA reader starts, with
+     `gh pr edit <n> --body-file <file> --attach '<file>#<alt>'`: a
+     "Screenshots" section after the QA tasks, naming the commit shown,
+     then one heading and visible image per page. When a later commit
+     changes how a page looks, replace that image and update the commit.
+   - Post one short PR comment as the record of the run: a title
+     "Browser QA of <head SHA>", a verdict line, a numbered list of
+     anything that looked or behaved differently, each one line, and for
+     each QA task, whether you checked it or couldn't.
    - Stop the dev server before your last message.
 4. **Review.** Start the reviewer (see "Start a reviewer") once the QA
    comment is posted, and tell it the comment exists.
