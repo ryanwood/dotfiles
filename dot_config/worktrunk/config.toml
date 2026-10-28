@@ -47,6 +47,8 @@ if [ "$(git rev-parse HEAD)" = "$(git rev-parse '{{ default_branch }}')" ]; then
   git merge -q --ff-only '{{ remote }}/{{ default_branch }}'
 fi
 
+# The one literal branch name: agents never push `next`, the staging branch in
+# repos that have one, since only the coordinating session stages.
 mkdir -p .claude
 cat > .claude/settings.local.json <<'JSON'
 {
@@ -70,6 +72,10 @@ cat > .claude/settings.local.json <<'JSON'
       "Bash(gh stack merge*)",
       "Bash(git push {{ remote }} {{ default_branch }}*)",
       "Bash(git push {{ remote }} HEAD:{{ default_branch }}*)",
+      "Bash(git push * next)",
+      "Bash(git push * next *)",
+      "Bash(git push * *:next)",
+      "Bash(git push * *:next *)",
       "Bash(gh pr merge*)",
       "Bash(wt merge*)",
       "Bash(wt remove*)",
