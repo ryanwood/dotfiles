@@ -1,0 +1,15 @@
+[Unit]
+Description=Paseo daemon
+
+[Service]
+WorkingDirectory=%h
+Environment=LANG=en_US.UTF-8
+Environment=PATH=%h/.local/bin:%h/.npm-global/bin:%h/.local/share/mise/shims:/usr/local/bin:/usr/bin:/bin
+# Node's real install directory goes first so neither paseo nor claude starts
+# through mise's node shim, which would prepend every global tool's directory
+# (the global Ruby included) to the PATH that agents and setup commands inherit.
+ExecStart=/bin/sh -c 'PATH="$$(%h/.local/bin/mise where node)/bin:$$PATH" exec paseo daemon run'
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
