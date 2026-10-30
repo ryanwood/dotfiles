@@ -122,7 +122,7 @@ if ! shopt -oq posix; then
 fi
 export PATH=~/.npm-global/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
-eval "$(~/.local/bin/mise activate bash)"
+eval "$(~/.local/bin/mise activate bash --shims)"
 
 # These are overrides to Deerlab system specs to find the Chrome binary
 export CHROME_NO_SANDBOX=1
