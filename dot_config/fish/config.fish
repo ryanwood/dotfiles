@@ -16,7 +16,8 @@ source ~/.config/fish/abbreviations.fish
 fish_add_path --path --move /Applications/Postgres.app/Contents/Versions/17/bin
 
 # MISE config
-~/.local/bin/mise activate fish | source
+~/.local/bin/mise activate fish --shims | source
+
 # Ensure it's moved to the top in TMUX or a subshell
 fish_add_path --path --move ~/.local/bin
 
