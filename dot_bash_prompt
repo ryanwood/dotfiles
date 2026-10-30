@@ -1,7 +1,7 @@
 # Custom bash prompt, sourced from the end of ~/.bashrc.
 # To revert: delete the "source ~/.bash_prompt" line there and open a new shell.
 #
-# Looks like:  hummingbird ~/p/d/a/models (main *=) $
+# Looks like:  devbox ~/p/d/a/models (main *=) $
 #   hostname  only shown over SSH
 #   path      parent folders abbreviated; PROMPT_ABBREV_PATH=0 shows it in full
 #   branch    gold, including the parentheses and status markers
